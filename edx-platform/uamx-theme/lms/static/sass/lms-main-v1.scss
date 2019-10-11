@@ -2,17 +2,15 @@
 // Version 1 styling (pre-Pattern Library)
 // ====================
 
-$uamx_blue: #0077c8;
-$uamx_green: #4a7729;
-$uamx_gray: #75787b;
-$uamx_black: #000000;
+@import '../variables';
 
-$blue: #EAEAEA;
-$primary: #FF0000;
+// $uamx_blue: #0077c8;
+// $uamx_green: #4a7729;
+// $uamx_gray: #75787b;
+// $uamx_black: #000000;
+
+// $blue: #EAEAEA;
+// $primary: #FF0000;
 
 @import 'build-base-v1';
 @import 'build-lms-v1'; // shared app style assets/rendering
-
-.pepe {
-  color: #333;
-}
