@@ -1,0 +1,13 @@
+// LMS - CSS application architecture
+// Version 1 styling (pre-Pattern Library)
+// ====================
+
+$blue: #EAEAEA;
+$primary: #FF0000;
+
+@import 'build-base-v1';
+@import 'build-lms-v1'; // shared app style assets/rendering
+
+.pepe {
+  color: #333;
+}
