@@ -12,6 +12,13 @@ $green: $uamx_green;
 $gray: $uamx_gray;
 $black: $uamx_black;
 
-
-$primary: $green;
-$secndary: $gray;
+$theme-colors: (
+    "primary":    $green,
+    "secondary":  $gray,
+    "success":    $green,
+    "info":       $blue,
+    // "warning":    $warning,
+    // "danger":     $danger,
+    "light":      $gray,
+    "dark":       $black
+  );
