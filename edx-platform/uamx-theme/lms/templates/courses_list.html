@@ -1,0 +1,26 @@
+<%page expression_filter="h"/>
+<%namespace name='static' file='static_content.html'/>
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div class="container">
+	<ul>
+	%for course in courses:
+		<%
+			name = course.display_name if hasattr(course, 'display_name') else course.name
+			description = course.short_description if hasattr(course, 'short_description') else course.short_desc
+			url = course.course_url if hasattr(course, 'course_url') else reverse('about_course', args=[course.id.to_deprecated_string()])
+			image_url = course.course_image_url if hasattr(course, 'course_image_url') else course.image_url
+		%>
+		<li>
+			<!-- <pre>${vars(course)}</pre> -->
+			<h3>${name}</h3>
+			<p>${description}</p>
+			<a href="${url}">${"Más información" | h}</a>
+			<img src="${image_url}"/>
+		</li>
+	%endfor
+	</ul>
+</div>
