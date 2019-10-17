@@ -3,81 +3,15 @@
 <%namespace name='static' file='static_content.html'/>
 <%!
 from django.utils.translation import ugettext as _
-from django.core.urlresolvers import reverse
-
+from django.urls import reverse
 from openedx.core.djangolib.markup import HTML, Text
 %>
 
 <main id="main" aria-label="Content" tabindex="-1">
-    <section class="home" style="background: rgb(230, 230, 230) none repeat scroll 0% 0%;">
-      <header style="background-image: url(/static/themes/uamx-theme/images/home_page.png); background-position: center;">
-        <div class="outer-wrapper">
-        <!--
-          <div class="title" style="background: rgba(255, 255, 255, 0.8) none repeat scroll 0% 0%;">
-            <div class="heading-group">
-              % if homepage_overlay_html:
-                ${homepage_overlay_html | n, decode.utf8}
-              % else:
-                  ## Translators: 'Open edX' is a registered trademark, please keep this untranslated. See http://open.edx.org for more information.
-                  <h1>${Text(_(u"Welcome to the Open edX{registered_trademark} platform!")).format(registered_trademark=HTML("<sup style='font-size: 65%'>&reg;</sup>"))}</h1>
-                  ## Translators: 'Open edX' is a registered trademark, please keep this untranslated. See http://open.edx.org for more information.
-                  <p>${_("It works! This is the default homepage for this Open edX instance.")}</p>
-              % endif
-            </div>
-
-            % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
-              <div class="course-search">
-                <form method="get" action="/categories">
-                  <label><span class="sr">${_("Search for a course")}</span>
-                    <input class="search-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
-                  </label>
-                  <button class="search-button" type="submit">
-                    <span class="icon fa fa-search" aria-hidden="true"></span><span class="sr">${_("Search")}</span>
-                  </button>
-                </form>
-              </div>
-            % endif
-            
-            <a style="color:white" class="btn btn-blue" href="/categories">
-              <c color="black">Ver cursos</c>
-            </a>
-          </div>
-        -->
-
-          % if show_homepage_promo_video:
-            <a href="#video-modal" class="media" rel="leanModal">
-              <div class="hero">
-                <div class="play-intro"></div>
-              </div>
-            </a>
-          % endif
-        </div>
-
+    <section class="home">
+      <header>
+        <%include file="index_uamx_header.html" />
       </header>
-
-  <body>
-
-      <div class="navbar-index">
-      <ul>
-        % if active == "moocs":
-          <li><a class="active" href="/moocs">MOOCs</a></li>
-        % else:
-          <li><a href="/moocs">MOOCs</a></li>
-        % endif
-        
-        % if active == "spocs":
-          <li><a class="active" href="/spocs">SPOCs</a></li>
-        % else:
-          <li><a href="/spocs">SPOCs</a></li>
-        % endif
-          
-        % if active == "fcon":
-           <li><a class="active"href="/fcon">Formaci&oacuten Continua</a></li>
-        % else:
-           <li><a href="/fcon">Formaci&oacuten Continua</a></li>
-        % endif
-      </ul>
-      </body>
 
       <%include file="${courses_list}" />
 
@@ -109,3 +43,4 @@ from openedx.core.djangolib.markup import HTML, Text
   $(window).load(function() {$('#signup_action').trigger("click");});
 </script>
 % endif
+

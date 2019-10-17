@@ -1,0 +1,56 @@
+<%page expression_filter="h"/>
+<%namespace name='static' file='static_content.html'/>
+<%!
+from django.utils.translation import ugettext as _
+from django.urls import reverse
+from openedx.core.djangolib.markup import HTML, Text
+%>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<% 
+  nav_state = {
+    "moocs_class": "",
+    "spocs_class": "",
+    "fcon_class": "",
+  }
+
+  if active == 'moocs':
+    nav_state["moocs_class"] = 'active'
+  elif active == 'spocs':
+    nav_state["spocs_class"] = 'active'
+  elif active == 'fcon':
+    nav_state["fcon_class"] = 'active'
+%>
+
+<div class="uamx-banner_top"></div>
+
+<nav class="uamx_index-nav navbar navbar-expand navbar-dark">
+  <ul class="navbar-nav">
+    <li class="nav-item ${nav_state.get('moocs_class')}">
+      <a class="nav-link" href="/moocs">MOOCs</a> 
+    </li>
+    <li class="nav-item ${nav_state.get('spocs_class')}"> 
+      <a class="nav-link" href="/spocs">SPOCs</a> 
+    </li>
+    <li class="nav-item ${nav_state.get('fcon_class')}">
+      <a class="nav-link" href="/fcon">${"Formación Continua" | h}</a> 
+    </li>
+  </ul>
+<!--
+  <form class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+-->
+</nav>
+
+<style>
+.uamx-banner_top {
+  background-image: url(/static/uamx-theme/images/home_page.png);
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  min-height: 200px;
+}
+</style>
