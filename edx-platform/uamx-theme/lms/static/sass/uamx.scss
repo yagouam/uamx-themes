@@ -1,5 +1,55 @@
 @import '../variables';
 
+/** index_uamx_header.html ***/
+
 .uamx_index-nav {
   background-color: $uamx_green;
+}
+
+.uamx-banner_top {
+  background-image: url(/static/uamx-theme/images/home_page.png);
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  min-height: 200px;
+}
+
+/** header/navbar-logo-header.html **/
+
+@media (max-width: 991px) {
+
+  .global-header .header-logo a {
+    margin-left: 0;
+    height: auto;
+    width: auto;
+    flex: 0.05 1 auto;
+    margin: 0;
+    float: none;
+    
+    .logo {
+      margin-left: 0;
+      float: none;
+    }
+  }
+
+  .uamx-header_logos {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  .mobile-menu .mobile-nav-link a {
+    color: #4a7729; /* UAM green */
+
+    &:hover {
+      color: #FFFFFF;
+      background-color: #4a7729; /* UAM green */
+    }
+  }
 }
