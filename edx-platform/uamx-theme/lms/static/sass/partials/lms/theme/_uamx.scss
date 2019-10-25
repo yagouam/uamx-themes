@@ -1,10 +1,27 @@
-@import '../variables';
-
 /** index_uamx_header.html ***/
 
 .uamx_index-nav {
-  background-color: $uamx_green;
+  background-color: theme-color("primary");
+
+  &.navbar-dark .navbar-nav .nav-link:hover {
+    text-decoration: none;
+  }
+
+  li.nav-item {
+    border-radius: 5px;
+    margin: 0 5px;
+
+    &.active {
+      background-color: $uamx_green_dark;
+      pointer-events: none;
+    }
+
+    &:hover {
+      background-color: $uamx_green_dark;
+    }
+  }
 }
+
 
 .uamx-banner_top {
   background-image: url(/static/uamx-theme/images/home_page.png);
@@ -16,23 +33,24 @@
 
 /** header/navbar-logo-header.html **/
 
-@media (max-width: 991px) {
-
-  .global-header .header-logo a {
+.global-header .header-logo a {
+  @media (max-width: 991px) {
     margin-left: 0;
     height: auto;
     width: auto;
     flex: 0.05 1 auto;
     margin: 0;
     float: none;
-    
+  
     .logo {
       margin-left: 0;
       float: none;
     }
   }
+}
 
-  .uamx-header_logos {
+.uamx-header_logos {
+  @media (max-width: 991px) {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -43,13 +61,16 @@
     bottom: 0;
     right: 0;
   }
+}
 
-  .mobile-menu .mobile-nav-link a {
-    color: #4a7729; /* UAM green */
+.mobile-menu .mobile-nav-link a {
+  @media (max-width: 991px) {
+    color: theme-color("primary");
 
     &:hover {
       color: #FFFFFF;
-      background-color: #4a7729; /* UAM green */
+      background-color: theme-color("primary");
     }
   }
 }
+
