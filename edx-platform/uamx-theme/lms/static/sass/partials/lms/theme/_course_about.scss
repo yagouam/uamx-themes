@@ -1,12 +1,33 @@
-.course-info .details {
-  
-  font-family: $font-family-sans-serif;
-  
-  h2 {
-    font-family: $font-family-sans-serif;
+.course-info {
+
+  header.course-profile {
+    background: none;
+    background-image: none;
+    height: auto;
+    padding-top: 0;
+    box-shadow: none;
+    border-bottom: none;
+
+    .intro-inner-wrapper {
+      border: 0;
+      box-shadow: none;
+
+      .media .hero {
+        border: 0;
+      }
+    }
   }
 
-  .course-sidebar header .social-sharing .sharing-message {
+  .details {
+    
     font-family: $font-family-sans-serif;
+    
+    h2 {
+      font-family: $font-family-sans-serif;
+    }
+ 
+    .course-sidebar header .social-sharing .sharing-message {
+      font-family: $font-family-sans-serif;
+    }
   }
 }

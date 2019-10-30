@@ -42,5 +42,7 @@ $m-blue-d4: mix($uamx_green, $uamx_black, 90%);
 $m-blue-d5: mix($uamx_green, $uamx_black, 95%);
 $m-blue-d6: mix($uamx_green, $uamx_black, 98%);
 
+$homepage-bg-image: url('../images/edx-theme/home_page.png');
+
 // Initialize the Open edX Bootstrap theme
 @import 'edx-bootstrap/sass/open-edx/theme';
