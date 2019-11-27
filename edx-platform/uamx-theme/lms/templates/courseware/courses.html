@@ -1,6 +1,8 @@
 <%page expression_filter="h"/>
 <%!
   import json
+  import yaml
+  import ast
   from django.utils.translation import ugettext as _
   from openedx.core.djangolib.js_utils import js_escaped_string, dump_js_escaped_json
 %>
@@ -73,9 +75,25 @@
           </ul>
           <ul class="courses-listing courses-list">
             %for course in courses:
-            <li class="courses-listing-item">
-              <%include file="../course.html" args="course=course" />
-            </li>
+              <%
+                if isinstance(course.short_description, unicode) and course.short_description[:1] == '{':
+                  json_metadata = json.loads(course.short_description)
+                else:
+                  json_metadata = json.loads('{}')
+
+                if 'materias' not in json_metadata:
+                  json_metadata['materias'] = ['otras']
+
+                if 'facultades' not in json_metadata:
+                  json_metadata['facultades'] = ['otras']
+
+                data_materias = ','.join(json_metadata['materias'])
+                data_facultades = ','.join(json_metadata['facultades'])
+              %>
+
+              <li class="courses-listing-item" data-materias="${data_materias}" data-facultades="${data_facultades}">
+                <%include file="../course.html" args="course=course" />
+              </li>
             %endfor
           </ul>
         </div>
