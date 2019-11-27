@@ -1,0 +1,369 @@
+<%!
+  import json
+  from django.utils.translation import ugettext as _
+  from django.utils import timezone
+  import datetime
+  from django import template
+  from openedx.core.djangolib.js_utils import dump_js_escaped_json
+  from openedx.core.djangoapps.models.course_details import CourseDetails
+ 
+%>
+<%inherit file="../main.html" />
+<%
+  course_discovery_enabled = settings.FEATURES.get('ENABLE_COURSE_DISCOVERY')
+%>
+ 
+<%namespace name='static' file='../static_content.html'/>
+
+<link rel="stylesheet" href="${static.url("css/bootstrap/bootstrap.min.css")}">
+<script type="text/javascript" src="${static.url("js/bootstrap/bootstrap.bundle.min.js")}"></script>
+<script type="text/javascript" src="${static.url("js/bootstrap/bootstrap.min.js")}"></script>
+<link rel="stylesheet" href="${static.url("css/lms-courses.css")}">
+
+<%block name="pagetitle">${_("Courses")}</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+
+    <%          
+                courses_highlighted=[]
+                orgs={}
+                avail_A=0
+                avail_S=0
+                avail_C=0
+                total_cursos=0
+                for course in courses:
+                    if course.display_org_with_default.lower() != 'poc':
+                      short_description = CourseDetails.fetch_about_attribute(course.id, 'short_description')
+                      category = "Sin asignar"
+                      if short_description == None:
+                        category = 'Sin asignar'    
+                      else:
+                        if '##' in short_description:
+                          splitted= short_description.split('##')
+                          category= splitted[1]
+                      if category in orgs:
+                        orgs[category] = orgs[category] + 1 
+                      else:
+                        orgs[category] = 1
+
+                      if course.start > timezone.now():
+                        avail_S += 1
+                      else:
+                        if course.end != None:
+                          if course.end < timezone.now():
+                            avail_A += 1
+                          else:
+                            avail_C += 1
+                          endif
+                        else:
+                          avail_C += 1 
+                        endif
+                      endif
+                      total_cursos += 1
+
+                courses_highlighted = sorted(courses, key=lambda course: course.start)
+
+    %>
+    
+   
+<div class="row">
+   <div id="search-panel" class="col-md-3 mx-auto">
+      <div class="search-controls">
+          <h6 for="home-search" class="search-bar-label">Buscar Cursos</h6> 
+          <input type="text" id="home-search" value="" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-haspopup="false" class="" placeholder="" spellcheck="false">
+          
+          <div class="panel-group" id="filters">
+
+             <div class="panel panel-default">
+              <div class="panel-heading">
+                <h6 class="panel-title">
+                  <a data-toggle="collapse" href="#availability-filter"><span class="fa fa-edit"></span> Disponibilidad</a>
+                </h6>
+              </div>
+              <div id="availability-filter" class="panel-collapse collapse show">
+                <ul class="list-group">
+                  <div class="list-group-item">
+                    <h6><input class="availfilter_all" type="checkbox"/> Todos <span class="badge">${total_cursos}</span></h6>
+                  </div>
+                  <div class="list-group-item">
+                    <h6><input class="availfilter" type="checkbox" value="C" checked /> Cursos en marcha <span class="badge">${avail_C}</span></h6>
+                  </div>
+                  <div class="list-group-item">
+                    <h6><input class="availfilter" type="checkbox" value="S" checked /> Todavía no iniciados <span class="badge">${avail_S}</span></h6>
+                  </div>
+                  <div class="list-group-item">
+                    <h6><input class="availfilter" type="checkbox" value="A" /> Archivados <span class="badge">${avail_A}</span></h6>
+                  </div>
+                </ul>
+              </div>
+            </div>
+  
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h6 class="panel-title">
+                  <a data-toggle="collapse" href="#org-filter"><span class="fa fa-edit"></span> Materias</a>
+                </h6>
+              </div>
+              <div id="org-filter" class="panel-collapse collapse show">
+                <ul class="list-group">
+                  <div class="list-group-item">
+                    <h6><input class="orgfilter_all" type="checkbox" checked/> Todas <span class="badge">${total_cursos}</span></h6>
+                  </div> 
+                  %for org,num in orgs.items():
+                  <div class="list-group-item">
+                    <h6><input class="orgfilter" type="checkbox" value="${org}"/> ${org} <span class="badge">${num}</span></h6>
+                  </div> 
+                  %endfor
+              </div>
+            </div>
+          </div>
+       </div>
+    </div>
+    <div class="col-md-9 mx-auto">
+      <section>
+        <section id="courses-container" class="courses-container">
+            <div class="section-title">
+                <h5>
+                  <span class="text">Estos son los cursos que hemos encontrado para ti</span>
+                </h5>
+    	    </div>
+            <section class="courses-highlighted">
+	        <section class="notfound" style="display:none" >
+	            No se han encontrado cursos con su criterio de búsqueda.
+	        </section>
+                <section class="courses" style="display:block">                    
+                    %for course in courses_highlighted:
+                        % if course.display_org_with_default.lower() != "poc" :                                                          
+	                    <span class="courses-listing-item" style="display:inline-block">
+                                <%include file="../course.html" args="course=course" />
+                            </span>
+                        % endif
+                    %endfor	
+                </section>
+            </section>
+        </section>
+      </section>
+    </div>
+
+    <script>
+        
+        // lazy load course images
+        function load_images() {
+           $('.course-image').each(function() {
+              var imgs = $(this).find('img');
+              imgs.each(function() {
+                var datasrc = $(this).attr('data-src');
+                if ( datasrc && $(this).offset().top < ($(window).scrollTop() + $(window).height()) ) {
+                  $(this).attr('src', datasrc);
+                  $(this).removeAttr('data-src');
+                };
+              });
+            });
+          }
+
+        $(window).scroll(function() {
+          load_images();
+        });
+
+        $(window).resize(function() {
+          load_images();
+        });
+
+        // filter definition 
+        var avail_filter = ["C", "S"];
+        var avail_filter_all = false;
+        var org_filter = [];
+        var org_filter_all = true;
+
+        // apply filters to courses list
+        function apply_course_filters() {
+
+          var foundAny=false;
+          $($(".courses")[0]).css("display","block");
+
+          $(".courses-listing-item").each(function() {
+            var avail = $(this).find('span.course-availability').text();
+            var org = $(this).find('span.course-organization').text();
+            if (avail_filter.indexOf(avail) >= 0 || avail_filter_all) {
+              if (org_filter.indexOf(org) >= 0 || org_filter_all) {
+                $(this).show();
+                foundAny=true;
+                var imgs = $(this).find('img');
+                imgs.each(function() {
+                  var datasrc = $(this).attr('data-src');
+                  if ( datasrc && $(this).offset().top < ($(window).scrollTop() + $(window).height()) ) {
+                    $(this).attr('src', datasrc);
+                    $(this).removeAttr('data-src');
+                  };
+                });
+              } else {
+                $(this).hide();
+              }
+            } else {
+              $(this).hide();
+            }
+          });
+          if (foundAny) {
+            $($(".notfound")[0]).css("display","none");
+          } else {
+            $($(".notfound")[0]).css("display","block");
+          }
+	  for (i=0;i<$(".orgfilter").length;i++){
+		filtro = $(".orgfilter")[i].value;
+		valor = 0;
+		// $($("input[value='"+filtro+"']+span")[0]).text()*1;
+		visibles = $("p.university:visible");
+		for (j=0;j<visibles.length;j++){	
+		if (visibles[j].innerHTML==filtro)
+			valor++;
+		}
+	   $($("input[value='"+filtro+"']+span")[0]).text(valor);
+	   }
+        }
+
+        // filter change triggers
+        $('.availfilter_all').change(function() {
+           avail_filter = [];
+           avail_filter_all = $(this).is(':checked');
+           $('.availfilter').each(function() {
+             $(this).attr('checked',false);
+           });
+           apply_course_filters();		
+             search($("#home-search")[0].value);
+        });
+
+        $('.orgfilter_all').change(function() {
+	   console.log('debug');
+           org_filter = [];
+           org_filter_all = $(this).is(':checked');
+           $('.orgfilter').each(function() {
+             $(this).attr('checked',false);
+           });
+           apply_course_filters();
+	     search($("#home-search")[0].value);
+        });
+
+        $('.availfilter').change(function() {
+            if (avail_filter_all) {
+              avail_filter_all = false;
+              $('.availfilter_all').attr('checked',false);
+            }
+            var avail = $(this)[0].value;
+            if ($(this).is(':checked')) {
+              avail_filter.push(avail);
+            } else {
+               avail_filter = avail_filter.filter(function(item) {
+                  return item !== avail;
+               });
+            }
+            apply_course_filters();
+	      search($("#home-search")[0].value);
+        });
+
+        $('.orgfilter').change(function() {
+            if (org_filter_all) {
+              org_filter_all = false;
+              $('.orgfilter_all').attr('checked',false);
+            }
+            var org = $(this)[0].value;
+            if ($(this).is(':checked')) {
+              org_filter.push(org);
+            } else {
+              org_filter = org_filter.filter(function(item) {
+                  return item !== org;
+              });
+            }
+            apply_course_filters();
+            search($("#home-search")[0].value);
+        });
+
+        // search courses
+        function search(search_query) {
+          console.log("search");
+          var foundAny=false;
+          search_query = search_query.toLowerCase();
+          $('.courses-listing-item:visible').each(function() {           
+            var title = $($(this).find("article")[0]).attr("aria-label")
+            if ( title.toLowerCase().includes(search_query)){                
+                $(this).show();
+                foundAny=true;
+            } else {
+                $(this).hide();
+            } 
+        });
+        
+          for (i=0;i<$(".orgfilter").length;i++){
+                filtro = $(".orgfilter")[i].value;
+                valor = 0;
+                // $($("input[value='"+filtro+"']+span")[0]).text()*1;
+                visibles = $("p.university:visible");
+                for (j=0;j<visibles.length;j++){        
+                if (visibles[j].innerHTML==filtro)
+                        valor++;
+                }
+           		  $($("input[value='"+filtro+"']+span")[0]).text(valor);
+           }
+
+
+          if (foundAny) {
+            $($(".notfound")[0]).css("display","none"); 
+          } else {
+            $($(".notfound")[0]).css("display","block");
+          }
+        }	
+
+
+        // serach text change trigger
+        $( "#home-search" ).keyup(function() {
+           apply_course_filters();
+           var query = $("#home-search")[0].value;
+           if (query) {
+             search(query);
+           }
+        });
+ 
+        // window initialitation       
+        $(document).ready(function() {
+           apply_course_filters();
+           var query = (location.search.split('search_query=')[1]||'').split('&')[0];
+           if (query) {
+             $("#home-search")[0].value=query;
+             search(query);
+           }
+        });
+
+    </script>
+<script type="text/javascript">
+function edxorglink(e){
+ if (checkCookie(e.attributes['courseid'].value) == "True")
+                    {
+                        window.location.href=e.attributes['edxorg'].value;
+                    }
+                    else
+                    {
+                        SetCookie(e.attributes['courseid'].value,"True",30);
+                        window.location.href=e.attributes['local'].value
+                    }
+}
+
+
+
+
+/*
+                $(".edxorglink").unbind().click(function(event) {
+                    event.preventDefault();
+                    if (checkCookie(this.attributes['courseid'].value) == "True")
+                    {
+                        window.location.href=this.attributes['edxorg'].value;
+                    }
+                    else
+                    {
+                        SetCookie(this.attributes['courseid'].value,"True",30);
+                        window.location.href=this.attributes['local'].value
+                    }
+                    return false;
+                  });
+*/
+      </script>
+</div>
+</main>
