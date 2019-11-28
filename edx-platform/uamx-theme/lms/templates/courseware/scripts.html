@@ -1,0 +1,79 @@
+<script>
+
+var SEPARATOR = '-'
+var filters = {materias: [], facultades: []};
+var query_string = window.location.search.substring(1);
+var query = query_string && parse_query_string(query_string);
+
+console.log('------- YAGO -------')
+console.log(query);
+
+$( document ).ready(function onDocumentReady () {
+  $('.search-facets-uamx input[type=checkbox]')
+    .change(function onCheckboxChange() {
+
+      var key = $(this).val().split(SEPARATOR)[0];
+      var value = $(this).val().split(SEPARATOR)[1];
+
+      if($(this).is(':checked')) {
+          filters[key].push(value)
+      } else {
+          filters[key] = jQuery.grep(filters[key], function grepFilters(v) {
+            return v != value;
+          });
+      }
+
+      render();
+  });
+
+  function render () {
+
+    $('.course-listing-item_uamx').each(function () {
+      var materias = $(this).data("materias").split(',');
+      var facultades = $(this).data("facultades").split(',');
+
+      var xmaterias = materias.filter(function(val) {
+        return filters.materias.indexOf(val) > -1;
+      });
+
+      var xfacultades = facultades.filter(function(val) {
+        return filters.facultades.indexOf(val) > -1;
+      });
+
+      var xquery = query.search_query && $(this).find('.course-name').text().search(query.search_query);
+
+      if (xfacultades.length === 0 && xmaterias.length === 0) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
+    });
+  }
+
+  render();
+});
+
+// Utility to get params from URL, crossbrowser.
+// https://stackoverflow.com/questions/979975/how-to-get-the-value-from-the-get-parameters
+function parse_query_string(query) {
+  var vars = query.split("&");
+  var query_string = {};
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split("=");
+    var key = decodeURIComponent(pair[0]);
+    var value = decodeURIComponent(pair[1]);
+    // If first entry with this name
+    if (typeof query_string[key] === "undefined") {
+      query_string[key] = decodeURIComponent(value);
+      // If second entry with this name
+    } else if (typeof query_string[key] === "string") {
+      var arr = [query_string[key], decodeURIComponent(value)];
+      query_string[key] = arr;
+      // If third or later entry with this name
+    } else {
+      query_string[key].push(decodeURIComponent(value));
+    }
+  }
+  return query_string;
+}
+</script>

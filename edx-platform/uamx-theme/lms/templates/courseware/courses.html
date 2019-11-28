@@ -74,8 +74,19 @@
             %endfor
           </ul>
           <ul class="courses-listing courses-list">
+
+            <%
+              ## Create facets dictionary
+              facets = {
+                "materias": {},
+                "facultades": {}
+              }
+            %>
+
             %for course in courses:
               <%
+                ## Manage data-src for each course/item
+
                 if isinstance(course.short_description, unicode) and course.short_description[:1] == '{':
                   json_metadata = json.loads(course.short_description)
                 else:
@@ -89,9 +100,22 @@
 
                 data_materias = ','.join(json_metadata['materias'])
                 data_facultades = ','.join(json_metadata['facultades'])
+
+                ## Fill facets JSON
+                for key in json_metadata['materias']:
+                  if key in facets['materias']:
+                    facets['materias'][key] += 1
+                  else:
+                    facets['materias'][key] = 1
+
+                for key in json_metadata['facultades']:
+                  if key in facets['facultades']:
+                    facets['facultades'][key] += 1
+                  else:
+                    facets['facultades'][key] = 1
               %>
 
-              <li class="courses-listing-item" data-materias="${data_materias}" data-facultades="${data_facultades}">
+              <li class="courses-listing-item course-listing-item_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}">
                 <%include file="../course.html" args="course=course" />
               </li>
             %endfor
@@ -107,6 +131,24 @@
         </aside>
         % endif
 
+        <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
+          <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
+          <section class="search-facets-uamx">
+            <form>
+              % for facet in facets:
+                <h3>${facet}</h3>
+                % for key in facets[facet]:
+                  <p>
+                    <label for="${facet}-${key}">${key} ${facets[facet][key]}</label>
+                    <input id="${facet}-${key}" value="${facet}-${key}" type="checkbox"/>
+                  </p>
+                % endfor
+              % endfor
+            </form>
+          </section>
+        </aside>
+
       </section>
     </section>
+    <%include file="scripts.html" args="facets=facets"/>
 </main>
