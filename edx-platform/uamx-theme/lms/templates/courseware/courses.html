@@ -132,6 +132,14 @@
         % endif
 
         <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
+          <div>
+            <h2>FILTROSSSS</h2>
+            <ul class="search-filters-uamx">
+              <li name="materias"></li>
+              <li name="facultades"></li>
+              <li name="query"></li>
+            </ul>
+          </div>
           <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
           <section class="search-facets-uamx">
             <form>
@@ -140,7 +148,7 @@
                 % for key in facets[facet]:
                   <p>
                     <label for="${facet}-${key}">${key} ${facets[facet][key]}</label>
-                    <input id="${facet}-${key}" value="${facet}-${key}" type="checkbox"/>
+                    <input id="${facet}-${key}" name="${facet}" value="${key}" type="checkbox"/>
                   </p>
                 % endfor
               % endfor
