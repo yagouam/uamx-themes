@@ -1,45 +1,111 @@
 <script>
 
-var filters = {};
-var query_string = window.location.search.substring(1);
-var query = parse_query_string(query_string).search_query;
+var ACTIVE_FILTER_TEMPLATE = `
+    <li class="active-filter">
+      <button data-value="verified" class="facet-option discovery-button" data-type="~@KEY@~">
+       <span class="query">~@VALUE@~</span>
+       <span aria-hidden="true" class="fa fa-times"></span>
+      </button>
+    </li>
+`;
+var ACTIVE_FILTER_TEMPLATE_KEY = '~@KEY@~';
+var ACTIVE_FILTER_TEMPLATE_VALUE = '~@VALUE@~';
 
-if (query) {
-  filters['query'] = query;
-}
+var query_string = window.location.search.substring(1);
+var filters = {
+  query: parse_query_string(query_string).search_query,
+  materias: parse_query_string(query_string).materias,
+  facultades: parse_query_string(query_string).facultades,
+};
 
 $( document ).ready(function onDocumentReady () {
-  $('.search-facets-uamx input[type=checkbox]')
-    .change(function onCheckboxChange() {
 
-      var type = $(this).attr('name');
-      var value = $(this).val();
+  $('#filter-bar .clear-filters')
+   .click(function () {
+     for (var facet in filters) {
+       filters[facet] = undefined;
+     }
 
-      if($(this).is(':checked')) {
-        filters[type] = value;
-      } else {
+     render();
+  });
+
+  $('.search-facets-uamx button')
+    .click(function onFacetsClick() {
+
+      var type = $(this).data("facet")
+      var value = $(this).data("value");
+
+      if($(this).hasClass('selected')) {
         filters[type] = undefined;
+      } else {
+        filters[type] = value;
       }
 
       render();
   });
 
   function render() {
+    renderButtons();
     renderFilters();
     renderList();
+    renderViewingText();
+  }
+
+  function renderButtons() {
+
+    for (var facet in filters) {
+
+       if (filters[facet]) {
+         $('.search-facets-uamx button[data-facet="' + facet + '"]')
+           .parent()
+           .addClass('hidden');
+
+         $('.search-facets-uamx button[data-facet="' + facet + '"][data-value="' + filters[facet] + '"]')
+           .addClass('selected')
+           .parent()
+           .removeClass('hidden');
+       } else {
+         $('.search-facets-uamx button[data-facet="' + facet + '"]')
+           .removeClass('selected')
+           .parent()
+           .removeClass("hidden");
+       }
+    }
   }
 
   function renderFilters () {
 
-    $('.search-filters-uamx li').each(function () {
-      var name = $(this).attr('name');
+    var someValue;
+    for (var facet in filters) {
+      
+      var value = filters[facet];
+      someValue = someValue || value;
 
-      if (filters[name]) {
-        $(this).html(filters[name]);
-      } else {
-        $(this).html('');
+      if (value && $('#filter-bar button[data-type="' + facet + '"]').length === 0) {
+        var template = ACTIVE_FILTER_TEMPLATE
+          .replace(ACTIVE_FILTER_TEMPLATE_KEY, facet)
+          .replace(ACTIVE_FILTER_TEMPLATE_VALUE, value);
+
+        $('#filter-bar ul.active-filters')
+          .append(template);
+         
+        $('#filter-bar button[data-type="' + facet + '"]')
+          .click(function onFilterButtonClick() {
+            filters[$(this).data('type')] = undefined;
+            render();
+          });
+      } else if (!value) {
+        $('#filter-bar button[data-type="' + facet + '"]')
+          .parent()
+          .remove();
       }
-    });
+    }
+
+    if (!someValue) {
+      $('#filter-bar').addClass('is-collapsed').removeClass('is_animated');
+    } else {
+      $('#filter-bar').removeClass('is-collapsed').addClass('is-animated');
+    }
   }
 
   function renderList () {
@@ -55,10 +121,17 @@ $( document ).ready(function onDocumentReady () {
       var matchingFilters = [xfacultades, xmaterias, xquery].filter(Boolean);
 
       if (countFilters.length === matchingFilters.length) {
-        $(this).show();
+        $(this).removeClass('hidden');
       } else {
-        $(this).hide();
+        $(this).addClass('hidden');
       }
+    });
+  }
+
+  function renderViewingText () {
+    var count = $('.course-listing-item_uamx').not('.hidden').length;
+    $('#discovery-message').text(function (index, text) {
+      return 'Viewing XX course'.replace('XX', count);
     });
   }
 

@@ -7,83 +7,29 @@
   from openedx.core.djangolib.js_utils import js_escaped_string, dump_js_escaped_json
 %>
 <%inherit file="../main.html" />
-<%
-  course_discovery_enabled = settings.FEATURES.get('ENABLE_COURSE_DISCOVERY')
-%>
 
 <%namespace name='static' file='../static_content.html'/>
-
-% if course_discovery_enabled:
-<%block name="header_extras">
-  % for template_name in ["course_card", "filter_bar", "filter", "facet", "facet_option"]:
-  <script type="text/template" id="${template_name}-tpl">
-      <%static:include path="discovery/${template_name}.underscore" />
-  </script>
-  % endfor
-  <%static:require_module module_name="js/discovery/discovery_factory" class_name="DiscoveryFactory">
-    DiscoveryFactory(
-      ${course_discovery_meanings | n, dump_js_escaped_json},
-      getParameterByName('search_query'),
-      "${user_language | n, js_escaped_string}",
-      "${user_timezone | n, js_escaped_string}"
-    );
-  </%static:require_module>
-</%block>
-% endif
 
 <%block name="pagetitle">${_("Courses")}</%block>
 
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="find-courses">
       <section class="courses-container">
-        % if course_discovery_enabled:
-        <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
-          <div id="discovery-message" class="search-status-label"></div>
-          <form class="wrapper-search-input">
-            <label for="discovery-input" class="sr">${_('Search for a course')}</label>
-            <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text"/>
-            <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
-              <span class="icon fa fa-search" aria-hidden="true"></span>
-              <div aria-live="polite" aria-relevant="all">
-                <div id="loading-indicator" class="loading-spinner hidden">
-                  <span class="icon fa fa-spinner fa-spin" aria-hidden="true"></span>
-                  <span class="sr">${_('Loading')}</span>
-                </div>
-              </div>
-            </button>
-          </form>
-        </div>
 
-        <div id="filter-bar" class="filters hide-phone is-collapsed">
-        </div>
-        % endif
+        <%include file="./uamx-discovery-header.html"/>
 
-        <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
-          <ul class="journal-list">
-            % for bundle in journal_info.get('journal_bundles'):
-            <li class="courses-listing-item">
-              <%include file="../journals/bundle_card.html" args="bundle=bundle" />
-            </li>
-            % endfor
-          </ul>
-          <ul class="journal-list">
-            %for journal in journal_info.get('journals'):
-            <li class="courses-listing-item">
-              <%include file="../journals/journal_card.html" args="journal=journal" />
-            </li>
-            %endfor
-          </ul>
+        <div class="courses" role="region" aria-label="${_('List of Courses')}">
+
+          <%
+            ## Create facets dictionary
+            facets = {
+              "materias": {},
+              "facultades": {}
+            }
+          %>
+
           <ul class="courses-listing courses-list">
-
-            <%
-              ## Create facets dictionary
-              facets = {
-                "materias": {},
-                "facultades": {}
-              }
-            %>
-
-            %for course in courses:
+            %for course in courses_uamx:
               <%
                 ## Manage data-src for each course/item
 
@@ -115,44 +61,107 @@
                     facets['facultades'][key] = 1
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}">
+              <li class="courses-listing-item course-listing-item_uamx organization-${course.org}_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}">
                 <%include file="../course.html" args="course=course" />
               </li>
             %endfor
           </ul>
+
+          <ul class="courses-listing courses-list courses-moocs_uamx">
+            %for course in courses_moocs:
+              <%
+                ## Manage data-src for each course/item
+
+                if isinstance(course.short_desc, unicode) and course.short_desc[:1] == '{':
+                  json_metadata = json.loads(course.short_desc)
+                else:
+                  json_metadata = json.loads('{}')
+
+                if 'materias' not in json_metadata:
+                  json_metadata['materias'] = ['otras']
+
+                if 'facultades' not in json_metadata:
+                  json_metadata['facultades'] = ['otras']
+
+                data_materias = ','.join(json_metadata['materias'])
+                data_facultades = ','.join(json_metadata['facultades'])
+
+                ## Fill facets JSON
+                for key in json_metadata['materias']:
+                  if key in facets['materias']:
+                    facets['materias'][key] += 1
+                  else:
+                    facets['materias'][key] = 1
+
+                for key in json_metadata['facultades']:
+                  if key in facets['facultades']:
+                    facets['facultades'][key] += 1
+                  else:
+                    facets['facultades'][key] = 1
+              %>
+
+              <li class="courses-listing-item course-listing-item_uamx organization-${course.organization}_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}">
+                <%include file="../custom_course.html" args="course=course" />
+              </li>
+            %endfor
+          </ul>
+
+          <ul class="courses-listing courses-list courses-fcon_uamx">
+            %for course in courses_fcon:
+              <%
+                ## Manage data-src for each course/item
+
+                if isinstance(course.short_desc, unicode) and course.short_desc[:1] == '{':
+                  json_metadata = json.loads(course.short_desc)
+                else:
+                  json_metadata = json.loads('{}')
+
+                if 'materias' not in json_metadata:
+                  json_metadata['materias'] = ['otras']
+
+                if 'facultades' not in json_metadata:
+                  json_metadata['facultades'] = ['otras']
+
+                data_materias = ','.join(json_metadata['materias'])
+                data_facultades = ','.join(json_metadata['facultades'])
+
+                ## Fill facets JSON
+                for key in json_metadata['materias']:
+                  if key in facets['materias']:
+                    facets['materias'][key] += 1
+                  else:
+                    facets['materias'][key] = 1
+
+                for key in json_metadata['facultades']:
+                  if key in facets['facultades']:
+                    facets['facultades'][key] += 1
+                  else:
+                    facets['facultades'][key] = 1
+              %>
+
+              <li class="courses-listing-item course-listing-item_uamx organization-${course.organization}_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}">
+                <%include file="../custom_course.html" args="course=course" />
+              </li>
+            %endfor
+          </ul>
+
         </div>
 
-
-        % if course_discovery_enabled:
         <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
           <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
-          <section class="search-facets-lists">
-          </section>
-        </aside>
-        % endif
-
-        <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
-          <div>
-            <h2>FILTROSSSS</h2>
-            <ul class="search-filters-uamx">
-              <li name="materias"></li>
-              <li name="facultades"></li>
-              <li name="query"></li>
-            </ul>
-          </div>
-          <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
-          <section class="search-facets-uamx">
-            <form>
+          <section class="search-facets-lists search-facets-uamx">
               % for facet in facets:
-                <h3>${facet}</h3>
+                <h3 class="header-facet">${facet}</h3>
+                <ul class="facet-list">
                 % for key in facets[facet]:
-                  <p>
-                    <label for="${facet}-${key}">${key} ${facets[facet][key]}</label>
-                    <input id="${facet}-${key}" name="${facet}" value="${key}" type="checkbox"/>
-                  </p>
+                  <li>
+                    <button data-facet="${facet}" data-value="${key}" data-text="${key}" class="facet-option discovery-button">
+                      ${key} <span class="count"><span class="count-number">${facets[facet][key]}</span></span>
+                    </button>
+                  </li>
                 % endfor
+                </ul>
               % endfor
-            </form>
           </section>
         </aside>
 

@@ -1,0 +1,26 @@
+
+<!-- SEARCH -->
+<div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
+  <div id="discovery-message" class="search-status-label">Viewing XX course</div>
+  <form class="wrapper-search-input" method="get">
+    <label for="discovery-input" class="sr">Buscar curso</label>
+    <input id="discovery-input" name="search_query" class="discovery-input" placeholder="Buscar curso" type="text">
+    <button type="submit" class="button postfix discovery-submit" title="Buscar">
+      <span class="icon fa fa-search" aria-hidden="true"></span>
+      <div aria-live="polite" aria-relevant="all">
+        <div id="loading-indicator" class="loading-spinner hidden">
+          <span class="icon fa fa-spinner fa-spin" aria-hidden="true"></span>
+          <span class="sr">Cargando</span>
+        </div>
+      </div>
+    </button>
+  </form>
+</div>
+
+<!-- ACTIVE FILTERS -->
+<div id="filter-bar" class="filters hide-phone is-collapsed">
+ <div class="filters-inner">
+   <ul class="active-filters facet-list"></ul>
+   <button id="clear-all-filters" class="clear-filters flt-right discovery-button">Clear All</button>
+ </div>
+</div>
