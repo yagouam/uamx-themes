@@ -1,5 +1,9 @@
 <script>
 
+var VIEWING_COURSES_TEMPLATE = 'Mostrando ~@PARTIAL@~ de ~@TOTAL@~ cursos.';
+var VIEWING_COURSES_TEMPLATE_PARTIAL = '~@PARTIAL@~';
+var VIEWING_COURSES_TEMPLATE_TOTAL = '~@TOTAL@~';
+
 var ACTIVE_FILTER_TEMPLATE = `
     <li class="active-filter">
       <button data-value="verified" class="facet-option discovery-button" data-type="~@KEY@~">
@@ -128,12 +132,24 @@ $( document ).ready(function onDocumentReady () {
         $(this).addClass('hidden');
       }
     });
+
+    $(".courses-list-title_uamx").each(function () {
+      if ($(this).next('ul').children(":not(.hidden)").length === 0) {
+        $(this).addClass("hidden");
+      } else if ($(this).hasClass("hidden")){
+        $(this).removeClass("hidden");
+      }
+    })
   }
 
   function renderViewingText () {
-    var count = $('.course-listing-item_uamx').not('.hidden').length;
+
+    var count_show = $('.course-listing-item_uamx').not('.hidden').length;
+    var total = $('.course-listing-item_uamx').length;
     $('#discovery-message').text(function (index, text) {
-      return 'Viewing XX course'.replace('XX', count);
+      return VIEWING_COURSES_TEMPLATE
+        .replace(VIEWING_COURSES_TEMPLATE_PARTIAL, count_show)
+        .replace(VIEWING_COURSES_TEMPLATE_TOTAL, total);
     });
   }
 

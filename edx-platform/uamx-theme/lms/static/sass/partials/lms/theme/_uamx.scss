@@ -83,17 +83,46 @@
   font-size: 11px;
 }
 
-.organization-uam_uamx .course-organization {
-    background-color: colors("green");
+@mixin course-list-item_uamx ($color) {
+
+  border-bottom-color: $color;
+
+  &:hover {
+    border-bottom-color: #bebebe;
+  }
+
+  .course-info .course-organization, 
+  .course-image .cover-image .learn-more {
+    background-color: $color;
+    border-color: $color;
+  }
+
+  .course-info .course-title {
+    color: $color;
+  }
 }
 
-.organization-mooc_uamx .course-organization {
-    background-color: colors("blue");
+.courses-container .courses .organization-uam_uamx .course {
+  @include course-list-item_uamx ($uamx_green);
 }
 
-.organization-fcon_uamx .course-organization {
-    background-color: colors("gray");
+.courses-container .courses .organization-mooc_uamx .course {
+  @include course-list-item_uamx ($uamx_blue);
 }
+
+.courses-container .courses .organization-fcon_uamx .course {
+  @include course-list-item_uamx ($uamx_gray);
+}
+
+.courses-container .courses .course .course-info .course-code {
+  display: none;
+}
+
+.courses-container .courses .course .course-info .course-date {
+  position: absolute;
+  bottom: 2px;
+}
+
 
 .find-courses {
   background: none;
@@ -104,6 +133,8 @@
 }
 
 .courses-list-title_uamx {
+  margin-top: 0;
   border-bottom: 2px solid #aaa;
   clear: both;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
