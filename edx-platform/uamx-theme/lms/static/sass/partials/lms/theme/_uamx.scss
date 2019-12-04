@@ -76,9 +76,34 @@
 
 
 /** SEARCH **/
-.organization-UAMx_uamx {
-  .course-organization {
-    color: #FFF !important;
-    background-color: theme-color("primary");
+.courses-container .courses .course .course-info .course-organization {
+  padding: 5px 15px !important; 
+  color: #FFF !important;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.organization-uam_uamx .course-organization {
+    background-color: colors("green");
+}
+
+.organization-mooc_uamx .course-organization {
+    background-color: colors("blue");
+}
+
+.organization-fcon_uamx .course-organization {
+    background-color: colors("gray");
+}
+
+.find-courses {
+  background: none;
+
+  .search-facets.phone-menu {
+    background-color: #f5f5f5;
   }
+}
+
+.courses-list-title_uamx {
+  border-bottom: 2px solid #aaa;
+  clear: both;
 }

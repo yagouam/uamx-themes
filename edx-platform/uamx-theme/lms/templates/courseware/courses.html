@@ -24,10 +24,11 @@
             ## Create facets dictionary
             facets = {
               "materias": {},
-              "facultades": {}
+              "facultades": {},
+              "organizacion": {}
             }
           %>
-
+          <h2 class="courses-list-title_uamx">UAMx</h2>
           <ul class="courses-listing courses-list">
             %for course in courses_uamx:
               <%
@@ -59,14 +60,22 @@
                     facets['facultades'][key] += 1
                   else:
                     facets['facultades'][key] = 1
+
+                ## As organization is same for all items in this list just fill facets number
+                key = 'uamx'
+                if key in facets['organizacion']:
+                  facets['organizacion'][key] += 1
+                else:
+                  facets['organizacion'][key] = 1
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-${course.org}_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}">
+              <li class="courses-listing-item course-listing-item_uamx organization-uam_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="uamx">
                 <%include file="../course.html" args="course=course" />
               </li>
             %endfor
           </ul>
 
+          <h2 class="courses-list-title_uamx">MOOCs</h2>
           <ul class="courses-listing courses-list courses-moocs_uamx">
             %for course in courses_moocs:
               <%
@@ -98,14 +107,22 @@
                     facets['facultades'][key] += 1
                   else:
                     facets['facultades'][key] = 1
+
+                ## As organization is same for all items in this list just fill facets number
+                key = 'mooc'
+                if key in facets['organizacion']:
+                  facets['organizacion'][key] += 1
+                else:
+                  facets['organizacion'][key] = 1
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-${course.organization}_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}">
+              <li class="courses-listing-item course-listing-item_uamx organization-mooc_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="mooc">
                 <%include file="../custom_course.html" args="course=course" />
               </li>
             %endfor
           </ul>
 
+          <h2 class="courses-list-title_uamx">FCON</h2>
           <ul class="courses-listing courses-list courses-fcon_uamx">
             %for course in courses_fcon:
               <%
@@ -137,9 +154,16 @@
                     facets['facultades'][key] += 1
                   else:
                     facets['facultades'][key] = 1
+
+                ## As organization is same for all items in this list just fill facets number
+                key = 'fcon'
+                if key in facets['organizacion']:
+                  facets['organizacion'][key] += 1
+                else:
+                  facets['organizacion'][key] = 1
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-${course.organization}_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}">
+              <li class="courses-listing-item course-listing-item_uamx organization-fcon_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="fcon">
                 <%include file="../custom_course.html" args="course=course" />
               </li>
             %endfor
