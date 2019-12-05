@@ -115,6 +115,11 @@ $( document ).ready(function onDocumentReady () {
 
   function renderList () {
     var items = $('.course-listing-item_uamx');
+    var filtersCount = {}
+    for (key in filters) {
+      filtersCount[key] = filtersCount[key] || {};
+    }
+
 
     items.each(function () {
 
@@ -128,6 +133,14 @@ $( document ).ready(function onDocumentReady () {
 
       if (countFilters.length === matchingFilters.length) {
         $(this).removeClass('hidden');
+
+        var dataset = $(this).data();
+        for (var key in dataset) {
+          var values = dataset[key].split(',');
+          values.forEach(function (v) {
+            filtersCount[key][v] = filtersCount[key][v] ? filtersCount[key][v] + 1 : 1;
+          });
+        };
       } else {
         $(this).addClass('hidden');
       }
@@ -136,10 +149,31 @@ $( document ).ready(function onDocumentReady () {
     $(".courses-list-title_uamx").each(function () {
       if ($(this).next('ul').children(":not(.hidden)").length === 0) {
         $(this).addClass("hidden");
-      } else if ($(this).hasClass("hidden")){
+      } else {
         $(this).removeClass("hidden");
       }
-    })
+    });
+
+    renderButtonsCount(filtersCount);
+  }
+
+  function renderButtonsCount(filtersCount) {
+
+    console.log(filtersCount);
+
+    $('.search-facets-uamx .facet-option').each(function () {
+
+      var facet = $(this).data('facet');
+      var value = $(this).data('value');
+      var count = filtersCount[facet][value];
+ 
+      if (count) {
+        $(this).find('.count-number')
+          .html(count);
+      } else {
+        $(this).parent().addClass('hidden');
+      }
+    });
   }
 
   function renderViewingText () {
