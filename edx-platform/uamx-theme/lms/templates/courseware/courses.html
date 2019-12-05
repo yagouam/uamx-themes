@@ -28,7 +28,7 @@
               "organizacion": {}
             }
           %>
-          <h2 class="courses-list-title_uamx courses-list-title-uamx_uamx">UAMx</h2>
+          <h2 class="courses-list-title_uamx courses-list-title-uamx_uamx">Innovación Docente</h2>
           <ul class="courses-listing courses-list">
             %for course in courses_uamx:
               <%
@@ -75,7 +75,7 @@
             %endfor
           </ul>
 
-          <h2 class="courses-list-title_uamx courses-list-title-mooc_uamx">MOOCs</h2>
+          <h2 class="courses-list-title_uamx courses-list-title-mooc_uamx">MOOC</h2>
           <ul class="courses-listing courses-list courses-moocs_uamx">
             %for course in courses_moocs:
               <%
@@ -122,7 +122,7 @@
             %endfor
           </ul>
 
-          <h2 class="courses-list-title_uamx courses-list-title-fcon_uamx">FCON</h2>
+          <h2 class="courses-list-title_uamx courses-list-title-fcon_uamx">Formación Continua</h2>
           <ul class="courses-listing courses-list courses-fcon_uamx">
             %for course in courses_fcon:
               <%
@@ -171,16 +171,29 @@
 
         </div>
 
+<%
+KEY_TO_STRING_MAP = {
+  'organizacion': 'oferta académica',
+  'uamx': 'innovación docente',
+  'fcon': 'formación continua'
+}
+
+def keyToString (key):
+  if not key in KEY_TO_STRING_MAP:
+    return key
+  else:
+    return KEY_TO_STRING_MAP[key]
+%>
         <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
           <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
           <section class="search-facets-lists search-facets-uamx">
               % for facet in facets:
-                <h3 class="header-facet">${facet}</h3>
+                <h3 class="header-facet">${keyToString(facet)}</h3>
                 <ul class="facet-list">
                 % for key in facets[facet]:
                   <li>
                     <button data-facet="${facet}" data-value="${key}" data-text="${key}" class="facet-option discovery-button">
-                      ${key} <span class="count"><span class="count-number">${facets[facet][key]}</span></span>
+                      ${keyToString(key)} <span class="count"><span class="count-number">${facets[facet][key]}</span></span>
                     </button>
                   </li>
                 % endfor

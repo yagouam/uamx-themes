@@ -1,5 +1,11 @@
 <script>
 
+var KEY_TO_STRING_MAP = {
+  'organizacion': 'oferta académica',
+  'uamx': 'innovación docente',
+  'fcon': 'formación continua'
+};
+
 var VIEWING_COURSES_TEMPLATE = 'Mostrando ~@PARTIAL@~ de ~@TOTAL@~ cursos.';
 var VIEWING_COURSES_TEMPLATE_PARTIAL = '~@PARTIAL@~';
 var VIEWING_COURSES_TEMPLATE_TOTAL = '~@TOTAL@~';
@@ -89,7 +95,7 @@ $( document ).ready(function onDocumentReady () {
       if (value && $('#filter-bar button[data-type="' + facet + '"]').length === 0) {
         var template = ACTIVE_FILTER_TEMPLATE
           .replace(ACTIVE_FILTER_TEMPLATE_KEY, facet)
-          .replace(ACTIVE_FILTER_TEMPLATE_VALUE, value);
+          .replace(ACTIVE_FILTER_TEMPLATE_VALUE, KEY_TO_STRING_MAP[value] || value);
 
         $('#filter-bar ul.active-filters')
           .append(template);
