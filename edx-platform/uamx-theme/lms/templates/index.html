@@ -1,5 +1,6 @@
 <%page expression_filter="h"/>
 <%inherit file="main.html" />
+<%block name="bodyclass">uamx-home</%block>
 <%namespace name='static' file='static_content.html'/>
 <%!
 from django.utils.translation import ugettext as _
@@ -43,5 +44,15 @@ from openedx.core.djangolib.markup import HTML, Text
 <script type="text/javascript">
   $(window).load(function() {$('#signup_action').trigger("click");});
 </script>
+% endif
+
+<!-- 
+Snippet copied from https://github.com/lpm0073/edx.custom-theme/blob/master/themes/custom-theme/lms/templates/index.html
+as seen in https://blog.lawrencemcdaniel.com/styling-open-edx-tips-and-tricks/#t1
+-->
+% if not uses_bootstrap:
+  <!-- McDaniel Oct-2018: add the Bootstrap javascript library, unless it's already included from webpack -->
+  ## xss-lint: disable=mako-invalid-js-filter
+  <script type="text/javascript" src="${static.url('common/js/vendor/bootstrap.bundle.js')}"></script>
 % endif
 
