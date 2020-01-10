@@ -10,8 +10,8 @@ from six import text_type
   <section class="highlighted-courses">
       <section class="courses">
 
-        <h4>Cursos destacados</h4>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <h5 class="uamx_index-smalltitles">Cursos destacados</h5>
+        <div id="carouselExampleIndicators" class="carousel slide uamx_index-carousel" data-ride="carousel">
           <ol class="carousel-indicators">
         
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -21,26 +21,24 @@ from six import text_type
           </ol>
           <div class="carousel-inner">
             %for i in range(len(courses)):
+                  
+              <% course = courses[i] %>
+
               %if i%3 == 0:
               <div class="carousel-item ${'active' if i == 0 else ''}">
                 <div class="uamx_carousel-inneritem">
               %endif
         
-                <article class="uamx_carousel-inneritem-article">
-        
-                  <% course = courses[i] %>
+                <article class="uamx_carousel-inneritem-article" style="background-image:url(${course.course_image_url})">
                   
                   %if hasattr(course, 'name'):
                     <a href="${course.course_url}" class="${course.organization}">
-                      <h1>${i}</h1>
                       <h4>${course.name}</h4>
                       <img src="${course.image_url}"/>
                     </a>
                   %else:
                     <a href="${reverse('about_course', args=[text_type(course.id)])}" class="${course.display_org_with_default}">
-                      <h1>${i}</h1>
                       <h4>${course.display_name_with_default}</h4>
-                      <img src="${course.course_image_url}"/>
                     </a>
                   %endif
                   
@@ -65,12 +63,24 @@ from six import text_type
       </section>
 
       <section>
-        <h4>Formación académica</h4>
-        <ul>
-          <li class="uamx_index-category uamx_index-category-mooc">MOOC</li>
-          <li class="uamx_index-category uamx_index-category-id">INNOVACIÓN DOCENTE</li>
-          <li class="uamx_index-category uamx_index-category-fcon">FORMACIÓN CONTINUA</li>
-        </ul>
+        <h5 class="uamx_index-smalltitles">Formación académica</h5>
+        <div class="row uamx_index-categories-container">
+          <article class="col-sm card uamx_index-category">
+            <a href="/courses?organizacion=mooc" class="card-body">
+              <h5 class="card-title">MOOC</h5>
+            </a>
+          </article>
+          <article class="col-sm card uamx_index-category">
+            <a href="/courses?organizacion=uamx" class="card-body">
+              <h5 class="card-title">INNOVACIÓN DOCENTE</h5>
+            </a>
+          </article>
+          <article class="col-sm card uamx_index-category">
+            <a href="/courses?organizacion=fcon" class="card-body">
+              <h5 class="card-title">FORMACIÓN CONTINUA</h5>
+            </a>
+          </article>
+        </div>
       </section>
 
       <div class="courses-more">
