@@ -21,37 +21,9 @@ from six import text_type
 %>
 <nav class="nav-links uamx_header-navbar-not-authenticated" aria-label=${_("Supplemental Links")}>
   <div class="main">
-    <div class="mobile-nav-item hidden-mobile nav-item">
-      <a href="/courses" class="dropdown-toggle">Materias</a>
-    </div>
-    <div class="mobile-nav-item hidden-mobile nav-item">
-      <a href="/courses" class="dropdown-toggle">Oferta Académica</a>
-    </div>
-    <div class="mobile-nav-item hidden-mobile nav-item">
-      <a href="/courses" class="dropdown-toggle">Facultades</a>
-    </div>
-    <div class="mobile-nav-item hidden-mobile nav-item">
-      <a href="/courses">Acerca de</a>
-    </div>
-    <div class="uamx_header-dropdownmenu uamx_header-dropdown-oferta hidden-mobile">
-      <h5>Materias</h5>
-      <hr/>
-      <div>
-        <div>
-          <h6><a href="#">Moocs</a></h6>
-          <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
-        </div>
-        <div>
-          <h6><a href="#">Moocs</a></h6>
-          <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
-        </div>
-        <div>
-          <h6><a href="#">Moocs</a></h6>
-          <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
-        </div>
-      </div>
-    </div>
-    <div class="uamx_header-dropdownmenu hidden-mobile">
+    <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
+      <a href="/courses" class="dropdown-toggle uamx_header-navbar-not-authenticated--dropdown-selector">Materias</a>
+    <div class="uamx_header-dropdownmenu hidden-mobile uamx_header-dropdownmenu">
       <h5>Materias</h5>
       <hr/>
       <div class="row uamx_header-dropdownmenu-list">
@@ -79,6 +51,86 @@ from six import text_type
             <li><a href="#">asdopoik psaod</a></li>
           </ul>
         </div>
+      </div>
+    </div>
+      
+    </div>
+    <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
+      <a href="/courses" class="dropdown-toggle uamx_header-navbar-not-authenticated--dropdown-selector">Oferta Académica</a>
+    <div class="uamx_header-dropdownmenu uamx_header-dropdown-oferta hidden-mobile">
+      <h5>Materias</h5>
+      <hr/>
+      <div>
+        <div>
+          <h6><a href="#">Moocs</a></h6>
+          <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
+        </div>
+        <div>
+          <h6><a href="#">Moocs</a></h6>
+          <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
+        </div>
+        <div>
+          <h6><a href="#">Moocs</a></h6>
+          <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
+      <a href="/courses" class="dropdown-toggle uamx_header-navbar-not-authenticated--dropdown-selector">Facultades</a>
+    <div class="uamx_header-dropdownmenu hidden-mobile">
+      <h5>Facultades</h5>
+      <hr/>
+      <div class="row uamx_header-dropdownmenu-list">
+        <div class="col-auto">
+          <ul class="list-unstyled">
+            <li><a href="#">asdopoik psaod</a></li>
+            <li><a href="#">asdopoik psaod</a></li>
+            <li><a href="#">asdopoik psaod</a></li>
+            <li><a href="#">asdopoik psaod</a></li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="list-unstyled">
+            <li><a href="#">asdopoik psaod</a></li>
+            <li><a href="#">asdopoik psaod</a></li>
+            <li><a href="#">asdopoik psaod</a></li>
+            <li><a href="#">asdopoik psaod</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
+      <a href="/courses" class="dropdown-toggle uamx_header-navbar-not-authenticated--dropdown-selector">
+        <button class="input-group-text uamx_index-search-append">
+          <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M12.442 12.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"></path>
+            <path fill-rule="evenodd" d="M8.5 14a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM15 8.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </a>
+      <div class="uamx_header-dropdownmenu hidden-mobile">
+        <form action="/courses" method="get">
+          <div class="form-row align-items-center uamx_index-search justify-content-center">
+            <div class="col-auto">
+              <label class="" for="search_query">¿Qué te interesa?</label>
+            </div>
+            <div class="col-auto">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="search_query" id="search_query">
+                <div class="input-group-append">
+                  <button class="input-group-text uamx_index-search-append">
+                    <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M12.442 12.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"></path>
+                      <path fill-rule="evenodd" d="M8.5 14a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM15 8.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>

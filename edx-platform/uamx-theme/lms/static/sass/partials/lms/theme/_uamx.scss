@@ -166,16 +166,11 @@ a.uamx_carousel-control {
 
       margin: 0;
 
-      a {
+      a.dropdown-toggle {
         color: theme-color("primary");
         display: block;
-        height: 73px;
+        height: 75px;
         padding: 20px 1em;
-
-        &:hover {
-          background: theme-color("primary");
-          color: #fff;
-        }
 
         &::after {
           display: inline-block;
@@ -200,19 +195,27 @@ a.uamx_carousel-control {
 
     }
   }
+
+  .uamx_header-dropdown:hover {
+    .uamx_header-dropdownmenu {
+      display: block;
+    }
+
+    a.dropdown-toggle {
+      background: theme-color("primary");
+      color: #fff;
+    }
+  }
   
   .uamx_header-dropdownmenu {
     position: absolute;
     top: 75px;
+    left: 0;
     background: white;
     box-shadow: 0px 1px 1px #646464;
     z-index: 99999;
     min-width: 700px;
     display: none;
-
-    &.active {
-      display: block;
-    }
 
     hr {
       height: 1px;
