@@ -166,7 +166,7 @@ a.uamx_carousel-control {
 
       margin: 0;
 
-      a.dropdown-toggle {
+      a.uamx_header-navbar-not-authenticated--dropdown-selector {
         color: theme-color("primary");
         display: block;
         height: 75px;
@@ -186,9 +186,16 @@ a.uamx_carousel-control {
 
         }
       }
+
+      .uamx_header-navbar-not-authenticated--dropdown-search {
+        color: theme-color("primary");
+        display: block;
+        height: 75px;
+        padding: 20px 1em;
+      }
       
       @media (max-width: 991px) {
-        a::after {
+        a.uamx_header-navbar-not-authenticated--dropdown-selector::after {
           display: none;
         }
       }
@@ -201,7 +208,8 @@ a.uamx_carousel-control {
       display: block;
     }
 
-    a.dropdown-toggle {
+    a.uamx_header-navbar-not-authenticated--dropdown-selector,
+    .uamx_header-navbar-not-authenticated--dropdown-search {
       background: theme-color("primary");
       color: #fff;
     }
@@ -231,10 +239,6 @@ a.uamx_carousel-control {
       margin: 0.5rem 0 0 0;
     }
     
-    .row {
-      padding: 0em 1em 2em;
-    }
-
     a {
       color: theme-color("primary");
 
@@ -242,15 +246,52 @@ a.uamx_carousel-control {
         color: theme-color("primary");
         font-weight: bold;
       }
+
+    }
+
+    &.uamx_header-dropdownmenu--search {
+      button {
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+        background-image: none;
+
+        &:hover {
+          background-image: none;
+          box-shadow: inset 0 0 20px 0 rgba(0, 3, 0, 0.35);
+        }
+      }
+
+      input {
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+        font: inherit;
+        position: relative;
+        
+        &::after{
+          content: '';
+          position: absolute;
+          left: 42%;
+          top: 100%;
+          width: 0;
+          height: 0;
+          border-left: 20px solid transparent;
+          border-right: 20px solid transparent;
+          border-top: 20px solid #e8e8e8;
+          clear: both;
+        }
+      }
     }
 
     .uamx_header-dropdownmenu-list {
+      padding: 0em 1em 2em 2em;
       font-size: 0.9;
     }
   }
 
   .uamx_header-dropdown-oferta {
-    .row p {
+    .uamx_header-dropdownmenu-list p {
       margin-bottom: 0; 
 
       &.small {
