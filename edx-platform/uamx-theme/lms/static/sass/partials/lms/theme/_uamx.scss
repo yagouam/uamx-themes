@@ -44,12 +44,11 @@
 }
 
 .uamx_carousel-inneritem {
-  height: 200px;
   width: 90%;
   margin: 0 auto;
   display: flex;
 
-  article {
+  .uamx_carousel-inneritem-container {
     width: 30%;
     height: 100%;
     position: relative;
@@ -401,55 +400,72 @@ a.uamx_carousel-control {
   }
 }
 
+/** COURSES **/
+.courses-container .courses {
+
+  .organization-uam_uamx .course {
+    @include course-list-item_uamx($uamx_green);
+  }
+  
+  .organization-mooc_uamx .course {
+    @include course-list-item_uamx($uamx_blue);
+  }
+  
+  .organization-fcon_uamx .course {
+    @include course-list-item_uamx($uamx_gray);
+  }
+
+  .course {
+
+    .course-image {
+
+      .cover-image {
+        height: 200px;
+
+        &::before {
+          height: 200px;
+        }
+      }
+    }
+
+    .course-info {
+  
+      padding: 4px 0 6px;
+      height: auto;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+  
+      .course-name {
+        margin: 0;
+        padding: 0;
+  
+        .course-title {
+          color: #fff;
+          font-size: 14px;
+          line-height: 1.2rem;
+          height: auto;
+          margin: 0;
+          font-weight: bold;
+        }
+    
+        .course-organization,
+        .course-code {
+          display: none;
+        }
+      }
+  
+      .course-date {
+        color: #FFF !important;
+        font-size: 13px;
+        line-height: 1.2em;
+      }
+    }
+  }
+}
 
 /** SEARCH **/
-.courses-container .courses .course .course-info .course-organization {
-  padding: 5px 15px !important; 
-  color: #FFF !important;
-  font-weight: bold;
-  font-size: 11px;
-}
-
-@mixin course-list-item_uamx ($color) {
-
-  border-bottom-color: $color;
-
-  &:hover {
-    border-bottom-color: #bebebe;
-  }
-
-  .course-info .course-organization, 
-  .course-image .cover-image .learn-more {
-    background-color: $color;
-    border-color: $color;
-  }
-
-  .course-info .course-title {
-    color: $color;
-  }
-}
-
-.courses-container .courses .organization-uam_uamx .course {
-  @include course-list-item_uamx ($uamx_green);
-}
-
-.courses-container .courses .organization-mooc_uamx .course {
-  @include course-list-item_uamx ($uamx_blue);
-}
-
-.courses-container .courses .organization-fcon_uamx .course {
-  @include course-list-item_uamx ($uamx_gray);
-}
-
-.courses-container .courses .course .course-info .course-code {
-  display: none;
-}
-
-.courses-container .courses .course .course-info .course-date {
-  position: absolute;
-  bottom: 2px;
-}
-
 
 .find-courses {
   background: none;

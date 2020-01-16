@@ -1,0 +1,20 @@
+/** MIXINS **/
+
+@mixin course-list-item_uamx ($color) {
+  
+  border-bottom-color: $color;
+
+  &:hover {
+    border-bottom-color: #bebebe;
+  }
+
+  .course-info {
+    background-color: $color;
+  }
+
+  .course-image .cover-image .learn-more {
+    background-color: $color;
+    border-color: $color;
+  }
+}
+

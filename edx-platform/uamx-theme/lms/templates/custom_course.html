@@ -6,6 +6,31 @@ from django.urls import reverse
 from six import text_type
 %>
 <%page args="course" expression_filter="h"/>
+
+<%
+MAX_LENGTH = 27
+baseString = course.name
+splitted = baseString.split(" ")
+output = splitted.pop(0)
+
+while len(splitted) > 0:
+  nextWord = splitted.pop(0)
+  nextWordWithSpace = " " + nextWord
+  lines = output.split("\n")
+  lastLine = lines[len(lines) - 1]
+
+  if (len(lastLine + nextWordWithSpace) > MAX_LENGTH):
+    if (len(lines) == 2):
+      output += "...";
+      splitted = [];
+    else:
+      output += "\n" + nextWord;
+  else:
+    output += nextWordWithSpace;
+
+course.display_name_splitted = output
+%>
+
 <article class="course" id="${course.id}" role="region" aria-label="${course.name}">
   <a href="${course.course_url}">
     <header class="course-image">
@@ -18,7 +43,7 @@ from six import text_type
       <h2 class="course-name">
         <span class="course-organization">${course.organization}</span>
         <span class="course-code">${course.id_course}</span>
-        <span class="course-title">${course.name}</span>
+        <span class="course-title">${course.display_name_splitted}</span>
       </h2>
       <%
       if course.start_date is not None:

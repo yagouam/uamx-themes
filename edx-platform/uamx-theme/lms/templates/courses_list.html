@@ -28,21 +28,16 @@ from six import text_type
               <div class="carousel-item ${'active' if i == 0 else ''}">
                 <div class="uamx_carousel-inneritem">
               %endif
-        
-                <article class="uamx_carousel-inneritem-article" style="background-image:url(${course.course_image_url})">
                   
                   %if hasattr(course, 'name'):
-                    <a href="${course.course_url}" class="${course.organization}">
-                      <h4>${course.name}</h4>
-                      <img src="${course.image_url}"/>
-                    </a>
+                    <div class="uamx_carousel-inneritem-container ${'organization-mooc_uamx' if course.organization else 'orgnization-fcon_uamx'}">
+                      <%include file="./custom_course.html" args="course=course" />
+                    </div>
                   %else:
-                    <a href="${reverse('about_course', args=[text_type(course.id)])}" class="${course.display_org_with_default}">
-                      <h4>${course.display_name_with_default}</h4>
-                    </a>
+                    <div class="uamx_carousel-inneritem-container organization-uam_uamx">
+                      <%include file="./course.html" args="course=course" />
+                    </div>
                   %endif
-                  
-                </article>
         
               %if (i-2)%3 == 0 or i == (len(courses)-1):
                 </div>  
