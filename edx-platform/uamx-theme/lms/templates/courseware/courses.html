@@ -10,7 +10,18 @@
 
 <%namespace name='static' file='../static_content.html'/>
 
+<%block name="bodyclass">uamx-search</%block>
 <%block name="pagetitle">${_("Courses")}</%block>
+
+<!-- BANNER -->
+<div class="uamx-search_banner">
+  <div class="uamx-search_banner-title">
+    <div class="uamx-search_banner-tittle-inner">
+      <h3>Encuentra tu programa en la UAM</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
+    </div>
+  </div>
+</div>
 
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="find-courses">
@@ -28,7 +39,7 @@
               "organizacion": {}
             }
           %>
-          <h2 class="courses-list-title_uamx courses-list-title-uamx_uamx">Innovación Docente</h2>
+          <h2 class="courses-list-title_uamx courses-list-title_uamx-uamx">Innovación Docente</h2>
           <ul class="courses-listing courses-list">
             %for course in courses_uamx:
               <%
@@ -75,7 +86,7 @@
             %endfor
           </ul>
 
-          <h2 class="courses-list-title_uamx courses-list-title-mooc_uamx">MOOC</h2>
+          <h2 class="courses-list-title_uamx courses-list-title_uamx-mooc">MOOC</h2>
           <ul class="courses-listing courses-list courses-moocs_uamx">
             %for course in courses_moocs:
               <%
@@ -122,7 +133,7 @@
             %endfor
           </ul>
 
-          <h2 class="courses-list-title_uamx courses-list-title-fcon_uamx">Formación Continua</h2>
+          <h2 class="courses-list-title_uamx courses-list-title_uamx-fcon">Formación Continua</h2>
           <ul class="courses-listing courses-list courses-fcon_uamx">
             %for course in courses_fcon:
               <%
