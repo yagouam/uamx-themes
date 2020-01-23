@@ -590,3 +590,156 @@ a.uamx_carousel-control {
     }
   }
 }
+
+/** ABOUT **/
+.uamx-about {
+
+  .content-wrapper.main-container {
+    padding: 0;
+    margin: 0;
+  }
+
+  .course-profile {
+    padding-top: 5em !important;
+
+    .intro-inner-wrapper {
+      
+      background-color: rgba(125,125,125,0.25) !important;
+      padding: 1em;
+
+      .intro {
+        width: auto !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+
+        .heading-group {
+          margin: 0 !important;
+          border: 0 !important;
+          box-shadow: none !important;
+
+          h1 {
+            font-size: 1.5em;
+            font-weight: bold;
+          }
+        }
+
+        .register.disabled {
+          width: auto !important;
+          padding: 0.5em;
+        }
+      }
+  
+      .important-dates {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+  
+        .important-dates-item {
+  
+          position: relative;
+          font-size: 0.9em;
+          width: 48%;
+          overflow: hidden;
+          margin-top: 4%;
+  
+          &:nth-child(even) {float:right}
+          &:nth-child(odd) {float:left}
+  
+          .important-dates-item-title {
+            font-weight: bold;
+            margin: 0;
+            margin-left: 35px;
+            line-height: 12px;
+          }
+  
+          .important-dates-item-text {
+            margin-left: 35px;
+            line-height: 12px;
+          }
+  
+          .icon {
+            position: absolute;
+            top: 5px;
+            left: 0;
+            font-size: 2em;
+          }
+        }
+      }
+    }
+  }
+
+  .container {
+    max-width: none;
+    padding: 0;
+
+    .details {
+      width: auto;
+      float: none;
+      margin: 0;
+
+      .inner-wrapper {
+
+        section {
+          padding: 1em 4em;
+          font-size: 0.85em;
+          line-height: 2.1em;
+          clear: both;
+
+          h2 {
+            font-weight: bold;
+            font-size: 18px;
+            margin: 2em 0 1.5em;
+          }
+
+          h3 {
+            font-size: 14px;
+          }
+
+          p {
+            font-size: 14px;
+          }
+
+          &.about {
+            background: theme-color("primary");
+            color: #fff;
+          }
+
+          &.course-staff {
+            .teacher {
+              background: #e6e6e6;
+              float: left;
+              max-width: 220px;
+              overflow: hidden;
+              padding: 10px;
+              height: 325px;
+              margin-right: 30px;
+
+              .teacher-image {
+                width: 200px;
+                height: 150px;
+                overflow: hidden;
+                float: none;
+
+                img {
+                  width: 100%;
+                  border: none;
+                  outline: none;
+                }
+              }
+
+              h3 {
+                font-size: 14px;
+                margin: 1em 0;
+              }
+            }
+          }
+
+          &.faq .responses {
+            float: none;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+}
