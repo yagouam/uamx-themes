@@ -155,6 +155,10 @@ a.uamx_carousel-control {
 /** navbar-not-authenticated.html **/
 .global-header .nav-links.uamx_header-navbar-not-authenticated {
 
+  .secondary {
+    margin-top: 5px !important;
+  }
+
   .main {
 
     margin-top: 0;
@@ -166,7 +170,7 @@ a.uamx_carousel-control {
       margin: 0;
 
       a.uamx_header-navbar-not-authenticated--dropdown-selector {
-        color: theme-color("primary");
+        color: theme-color("secondary");
         display: block;
         height: 75px;
         padding: 20px 1em;
@@ -216,7 +220,7 @@ a.uamx_carousel-control {
   
   .uamx_header-dropdownmenu {
     position: absolute;
-    top: 75px;
+    top: 69px;
     left: 0;
     background: white;
     box-shadow: 0px 1px 1px #646464;
@@ -601,10 +605,21 @@ a.uamx_carousel-control {
 
   .course-profile {
     padding-top: 5em !important;
+    position: relative;
+
+    .course-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: auto;
+    }
 
     .intro-inner-wrapper {
       
-      background-color: rgba(125,125,125,0.25) !important;
+      background-color: rgba(200,200,200,0.6) !important;
       padding: 1em;
 
       .intro {
@@ -619,7 +634,8 @@ a.uamx_carousel-control {
 
           h1 {
             font-size: 1.5em;
-            font-weight: bold;
+            font-weight: bold !important;
+            text-shadow: none !important;
           }
         }
 
@@ -680,7 +696,7 @@ a.uamx_carousel-control {
       .inner-wrapper {
 
         section {
-          padding: 1em 4em;
+          padding: 0.5em 4em 0;
           font-size: 0.85em;
           line-height: 2.1em;
           clear: both;
@@ -688,7 +704,7 @@ a.uamx_carousel-control {
           h2 {
             font-weight: bold;
             font-size: 18px;
-            margin: 2em 0 1.5em;
+            margin: 0em 0 1.5em;
           }
 
           h3 {
@@ -702,6 +718,8 @@ a.uamx_carousel-control {
           &.about {
             background: theme-color("primary");
             color: #fff;
+            padding-top: 3em;
+            padding-bottom: 3em;
           }
 
           &.course-staff {
