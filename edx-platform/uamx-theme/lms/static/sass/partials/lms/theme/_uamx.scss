@@ -16,12 +16,12 @@
   }
 
   h5.uamx_index-smalltitles {
-    margin-left: 5%;
+   margin-left: 6.5%; 
   }
 
   .courses-container .courses-more {
     text-align: left;
-    margin-left: 5%;
+    margin-left: 6.5%;
     margin-top: 40px;
     font-size: 14px;
     text-decoration: underline;
@@ -97,9 +97,59 @@ a.uamx_carousel-control {
 
   .uamx_index-category {
     text-align: center;
-    margin: 0 10px;
+    margin: 0 10px 10px;
+    height: 125px;
+    background-size: cover;
+    padding: 0;
+    border: none;
+
+    &.uamx_index-category--mooc {
+      background-image: url(/static/uamx-theme/images/mc.jpg);
+
+      a {
+        background-color: rgba($uamx_blue, 0.5);
+
+        &:hover {
+          background-color: rgba($uamx_blue, 0.85);
+        }
+      }
+    } 
+  
+    &.uamx_index-category--uamx {
+      background-image: url(/static/uamx-theme/images/id.jpg);
+
+      a {
+        background-color: rgba($uamx_green, 0.5);
+
+        &:hover {
+          background-color: rgba($uamx_green, 0.85);
+        }
+      }
+    } 
+  
+    &.uamx_index-category--fcon {
+      background-image: url(/static/uamx-theme/images/fc.jpg);
+
+      a {
+        background-color: rgba($uamx_gray, 0.5);
+
+        &:hover {
+          background-color: rgba($uamx_gray, 0.85);
+        }
+      }
+    }
+
+    a {
+      color: white;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
   
     h5 {
+      font-size: 1.5em;
+      margin-top: 20px;
       margin-bottom: 0;
     }
   }
@@ -172,7 +222,7 @@ a.uamx_carousel-control {
       a.uamx_header-navbar-not-authenticated--dropdown-selector {
         color: theme-color("secondary");
         display: block;
-        height: 75px;
+        height: 69px;
         padding: 20px 1em;
 
         &::after {
@@ -340,17 +390,24 @@ a.uamx_carousel-control {
 
 
 .uamx-banner_top {
-  background-image: url(/static/uamx-theme/images/home_page.png);
+  background-image: url(/static/uamx-theme/images/img-hero.jpg);
   background-size: cover;
-  background-position: center;
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-color: white;
   width: 100%;
-  min-height: 300px;
+  min-height: 220px;
 
   .uamx_banner-top-text {
-    padding: 2em 0 0 2em;
+    padding: 2em 0 0 10%;
+    max-width: 500px;
 
     p {
-      color: theme-color("primary");
+      color: theme-color("secondary");
+    }
+
+    h5 {
+      font-size: 2em;
     }
   }
 }
@@ -475,10 +532,11 @@ a.uamx_carousel-control {
   .content-wrapper {
     position: relative;
     margin-top: 0;
+    padding: 0 0 10px;
   }
 
   #main {
-    padding-top: 200px;
+    padding: 0 50px;
   }
 }
 
@@ -487,7 +545,8 @@ a.uamx_carousel-control {
   top: 0;
   left: 0;
   right: 0;
-  background-image: url(/static/uamx-theme/images/img-hero-curso.jpg);
+  background-image: url(/static/uamx-theme/images/img-hero-2.jpg);
+  background-size: contain;
   height: 200px;
 
   .uamx-search_banner-title {
@@ -507,24 +566,38 @@ a.uamx_carousel-control {
 
   background: none;
 
+  #filter-bar {
+    display: none;
+  }
+
+  .courses-container {
+    padding-top: 20px;
+  }
+
   div#discovery-message {
     font-size: 22px;
-    float: none;
+    float: left;
     font-weight: bold;
-    border-bottom: solid 1px black;
     margin: 0;
     width: auto;
   }
 
   .wrapper-search-input {
     float: right !important;
-    margin: 2em 0 0 0;
+    margin: 10px 0 0 0;
+    width: auto !important;
 
     .discovery-input {
       border: solid lightgray 1px;
       height: auto;
       padding: 7px 14px;
       border-radius: 11px;
+      width: 200px;
+      transition: width 0.25s;
+
+      &:focus {
+        width: 350px;
+      }
     }
 
     .discovery-submit {
@@ -540,7 +613,7 @@ a.uamx_carousel-control {
   .search-facets.phone-menu {
     background-color: #eeeeee;
     float: left;
-    margin-top: 4.4em;
+    margin-top: 20px;
     box-shadow: none;
     padding: 0 15px;
 
@@ -560,8 +633,9 @@ a.uamx_carousel-control {
   }
 
   .courses {
-    float: right!important;
-    margin-right: 0!important;
+    float: right !important;
+    margin-right: 0 !important;
+    padding-top: 20px;
   }
 
   .courses-list-title_uamx {
@@ -639,6 +713,10 @@ a.uamx_carousel-control {
           }
         }
 
+        .main-cta span.register.disabled {
+          padding: 0.5em 1em;
+        }
+   
         .register.disabled {
           width: auto !important;
           padding: 0.5em;
@@ -723,6 +801,9 @@ a.uamx_carousel-control {
           }
 
           &.course-staff {
+
+            overflow: hidden;
+
             .teacher {
               background: #e6e6e6;
               float: left;
