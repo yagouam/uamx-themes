@@ -9,6 +9,8 @@
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from six import text_type
+
+from courses_edx.utils import get_materias_and_facultades_list
 %>
 
 <%
@@ -19,6 +21,27 @@ from six import text_type
   restrict_enroll_for_course = course and settings.FEATURES.get('RESTRICT_ENROLL_BY_REG_METHOD') and course.enrollment_domain
   allow_public_account_creation = static.get_value('ALLOW_PUBLIC_ACCOUNT_CREATION', settings.FEATURES.get('ALLOW_PUBLIC_ACCOUNT_CREATION'))
 %>
+
+<%
+list = get_materias_and_facultades_list()
+
+ul_materias = [[]]
+ul_facultades = [[]]
+
+for materia in list['materias']:
+  ul_materias[-1].append(materia)
+
+  if len(ul_materias[-1]) % 4 == 0:
+    ul_materias.append([])
+ 
+for facultad in list['facultades']:
+  ul_facultades[-1].append(facultad)
+
+  if len(ul_facultades[-1]) % 4 == 0:
+    ul_facultades.append([])
+    
+%>
+
 <nav class="nav-links uamx_header-navbar-not-authenticated" aria-label=${_("Supplemental Links")}>
   <div class="main">
     <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
@@ -27,33 +50,21 @@ from six import text_type
       <h5>Materias</h5>
       <hr/>
       <div class="row uamx_header-dropdownmenu-list">
-        <div class="col-sm">
-          <ul class="list-unstyled">
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-          </ul>
-        </div>
-        <div class="col-sm uamx_header-dropdownmenu-middle">
-          <ul class="list-unstyled">
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-          </ul>
-        </div>
-        <div class="col-sm">
-          <ul class="list-unstyled">
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-          </ul>
+
+        %for ul_m in ul_materias:
+            <div class="col-sm">
+              <ul class="list-unstyled">
+
+            %for li_m in ul_m:
+                <li><a href="https://uamx-pre.uam.es/courses?materias=${li_m}">${li_m}</a></li>
+            %endfor
+
+              </ul>
+            </div>
+        %endfor
+
         </div>
       </div>
-    </div>
-      
     </div>
     <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
       <a href="/courses" class="uamx_header-navbar-not-authenticated--dropdown-selector">Oferta Académica</a>
@@ -62,15 +73,15 @@ from six import text_type
       <hr/>
       <div class="uamx_header-dropdownmenu-list">
         <div>
-          <h6><a href="#">Moocs</a></h6>
+          <h6><a href="https://uamx-pre.uam.es/courses?organizacion=uamx">Innovación Docente</a></h6>
           <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
         </div>
         <div>
-          <h6><a href="#">Moocs</a></h6>
+          <h6><a href="https://uamx-pre.uam.es/courses?organizacion=mooc">Moocs</a></h6>
           <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
         </div>
         <div>
-          <h6><a href="#">Moocs</a></h6>
+          <h6><a href="https://uamx-pre.uam.es/courses?organizacion=fcon">Formación Continua</a></h6>
           <p class="small">asdpoa jspoja psdoiajspoijoapisj opash pua s  piauhsu hpuih </p>
         </div>
       </div>
@@ -82,22 +93,18 @@ from six import text_type
       <h5>Facultades</h5>
       <hr/>
       <div class="row uamx_header-dropdownmenu-list">
-        <div class="col-auto">
-          <ul class="list-unstyled">
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-          </ul>
-        </div>
-        <div class="col-auto">
-          <ul class="list-unstyled">
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-            <li><a href="#">asdopoik psaod</a></li>
-          </ul>
-        </div>
+
+        %for ul_f in ul_facultades:
+            <div class="col-sm">
+              <ul class="list-unstyled">
+
+            %for li_f in ul_f:
+                <li><a href="https://uamx-pre.uam.es/courses?facultades=${li_f}">${li_f}</a></li>
+            %endfor
+
+              </ul>
+            </div>
+        %endfor
       </div>
     </div>
     </div>
