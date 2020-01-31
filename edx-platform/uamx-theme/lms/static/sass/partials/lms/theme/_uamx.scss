@@ -612,6 +612,57 @@ a.uamx_carousel-control {
   #main {
     padding: 0 6%;
   }
+
+  .uamx_facet_collapse {
+    display: none;
+    color: #75787b;
+    background: #eeeeee;
+    border: none;
+    float: right;
+    font-size: 1.2em;
+    padding: 0.2em 0.7em;
+    margin-top: 10px;
+
+    &:hover, &.collapsed {
+      background: #75787b;
+      color: #eeeeee;
+    }
+  }
+
+  .search-facets.collapse:not(.show) {
+    display: block;
+  }
+
+  @media screen and (max-width: 768px) {
+    .search-facets.collapse:not(.show) {
+      display: none;
+    }
+
+    .uamx_facet_collapse {
+      display: block;
+    }
+
+    .find-courses .wrapper-search-input {
+      display: block;
+      clear: both;
+      float: left !important;
+      width: 85% !important;
+
+      .discovery-input {
+        width: 100% !important;
+      }
+    }
+
+    .courses {
+      width: 100% !important;
+    }
+  }
+
+  @media screen and (max-width: 979px) and (min-width: 769px) {
+    .find-courses .courses-container .courses .courses-listing .courses-listing-item {
+      width: 48.5%;
+    }
+  }
 }
 
 .uamx-search_banner {
