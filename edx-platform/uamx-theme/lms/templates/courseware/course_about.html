@@ -295,6 +295,17 @@ from six import string_types
       <div class="inner-wrapper">
         ${HTML(get_course_about_section(request, course, "overview"))}
       </div>
+
+      % if get_course_about_section(request, course, "video"):
+      <a href="#video-modal" class="media uamx_video-icon" rel="leanModal">
+        <div class="hero">
+          <div class="play-intro"></div>
+          <i class="icon fa fa-play-circle"></i>
+          <span class="text">+ info</span>
+        </div>
+      </a>
+      %endif
+
     </div>
     </%block>
 

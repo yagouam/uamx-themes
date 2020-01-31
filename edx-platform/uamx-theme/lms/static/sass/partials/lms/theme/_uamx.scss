@@ -6,13 +6,11 @@
     margin: 0;
   }
 
-  .courses-container {
-    padding: 0 20px;
-  }
-
   .highlighted-courses .courses {
     float: none;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    padding: 40px 0 40px;
+    background-color: #f9f9f9;
   }
 
   h5.uamx_index-smalltitles {
@@ -37,7 +35,7 @@
       background-color: #CCC;
 
       &.active {
-        background-color: #AAA;
+        background-color: theme-color("primary");
       }
     }
   }
@@ -97,9 +95,11 @@ a.uamx_carousel-control {
 
   .uamx_index-category {
     text-align: center;
-    margin: 0 10px 10px;
+    margin: 0 1.5% 10px;
     height: 125px;
     background-size: cover;
+    background-position: center;
+    transition: background-size 0.3s;
     padding: 0;
     border: none;
 
@@ -113,9 +113,14 @@ a.uamx_carousel-control {
           background-color: rgba($uamx_blue, 0.85);
         }
       }
+
+      h5 {
+        margin-top: 48px;
+      }
     } 
   
     &.uamx_index-category--uamx {
+      margin: 0 2% 10px;
       background-image: url(/static/uamx-theme/images/id.jpg);
 
       a {
@@ -124,6 +129,10 @@ a.uamx_carousel-control {
         &:hover {
           background-color: rgba($uamx_green, 0.85);
         }
+      }
+
+      h5 {
+        margin-top: 32px;
       }
     } 
   
@@ -137,19 +146,27 @@ a.uamx_carousel-control {
           background-color: rgba($uamx_gray, 0.85);
         }
       }
+
+      h5 {
+        margin-top: 32px;
+      }
     }
 
     a {
       color: white;
+      padding: 0;
 
       &:hover {
         text-decoration: none;
+
+        h5 {
+          text-shadow: black 1px 1px 4px;
+        }
       }
     }
   
     h5 {
       font-size: 1.5em;
-      margin-top: 20px;
       margin-bottom: 0;
     }
   }
@@ -158,7 +175,7 @@ a.uamx_carousel-control {
 .uamx_index-search {
 
   padding-top: 1em;
-  background-color: theme-color("info");
+  background-color: theme-color("primary");
 
   label {
     text-shadow: none;
@@ -167,26 +184,79 @@ a.uamx_carousel-control {
     margin-bottom: 17px;
   }
 
-  input, .uamx_index-search-append {
-    box-shadow: none;
-    height: 30px;
-  }
+  .wrapper-search-input {
+    margin: 0 0 15px;
+    width: auto !important;
+    position: relative;
+    clear: both;
+    overflow: hidden;
 
-  button.uamx_index-search-append {
-    background: lightgray;
+    .discovery-input {
+      border: solid lightgray 1px;
+      height: auto;
+      padding: 3px 14px;
+      border-radius: 2px;
+      width: 350px;
+      transition: width 0.25s;
+      font-style: normal;
+      font-family: inherit;
+      color: gray;
 
-    &:active, &:hover {
-      box-shadow: inset 0 0 20px 0 rgba(0, 3, 0, 0.35);
+      &:focus {
+        width: 400px;
+      }
+      
+      &::placeholder {
+        color: transparent;
+      }
+    }
+
+    .discovery-submit {
+      background: none;
+      color: #BBB;
+      font-size: 16px;
+      font-weight: normal;
+      border: none;
+      height: 32px;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      box-shadow: none;
+      text-shadow: none;
     }
   }
 }
 
 /** footer.html **/
 
-.uamx_footer {
+.uamx_footer.container-fluid {
 
-  .uamx_footer-uamlogo img {
-    max-width: 100%;
+  line-height: 2em;
+  width: 87%;
+  box-shadow: none;
+
+  a.uamx_footer-uamlogo {
+
+    display: inline-block;
+    width: 63%;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .uamx_footer-uamxlogo {
+
+    display: inline-block;
+    width: 14%;
+    padding-left: 2%;
+    margin-left: 2%;
+    border-left: #c8c8c8 solid 1px;
+
+    img {
+      max-width: 100%;
+    }
   }
 
   .small {
@@ -374,7 +444,6 @@ a.uamx_carousel-control {
   }
 
   li.nav-item {
-    border-radius: 5px;
     margin: 0 5px;
 
     &.active {
@@ -388,7 +457,6 @@ a.uamx_carousel-control {
   }
 }
 
-
 .uamx-banner_top {
   background-image: url(/static/uamx-theme/images/img-hero.jpg);
   background-size: cover;
@@ -400,15 +468,14 @@ a.uamx_carousel-control {
 
   .uamx_banner-top-text {
     padding: 2em 0 0 10%;
-    max-width: 500px;
-
-    p {
-      color: theme-color("secondary");
-    }
 
     h5 {
       font-size: 2em;
     }
+  }
+
+  &.uamx-banner_top_search {
+    background-image: url(/static/uamx-theme/images/img-hero-2.jpg);
   }
 }
 
@@ -476,7 +543,14 @@ a.uamx_carousel-control {
     @include course-list-item_uamx($uamx_gray);
   }
 
+  li.course-listing-item_uamx {
+    clear: none !important;
+    margin-right: 1.5% !important;
+  }
+
   .course {
+
+    margin: 0;
 
     .course-image {
 
@@ -536,7 +610,7 @@ a.uamx_carousel-control {
   }
 
   #main {
-    padding: 0 50px;
+    padding: 0 6%;
   }
 }
 
@@ -591,7 +665,7 @@ a.uamx_carousel-control {
       border: solid lightgray 1px;
       height: auto;
       padding: 7px 14px;
-      border-radius: 11px;
+      border-radius: 2px;
       width: 200px;
       transition: width 0.25s;
 
@@ -607,6 +681,7 @@ a.uamx_carousel-control {
       font-weight: normal;
       border: none;
       height: 32px;
+      pointer-events: none;
     }
   }
 
@@ -625,9 +700,18 @@ a.uamx_carousel-control {
 
     .facet-option {
       color: #888;
+      white-space: normal;
 
       &:hover {
         color: #fff;
+      }
+
+      &:focus {
+        color: #fff;
+      }
+
+      &.selected {
+        color: #888;
       }
     }
   }
@@ -694,7 +778,8 @@ a.uamx_carousel-control {
     .intro-inner-wrapper {
       
       background-color: rgba(200,200,200,0.6) !important;
-      padding: 1em;
+      padding: 1em 7%;
+      margin: 0 !important;
 
       .intro {
         width: auto !important;
@@ -774,7 +859,7 @@ a.uamx_carousel-control {
       .inner-wrapper {
 
         section {
-          padding: 0.5em 4em 0;
+          padding: 0.5em 7% 0;
           font-size: 0.85em;
           line-height: 2.1em;
           clear: both;
@@ -803,6 +888,7 @@ a.uamx_carousel-control {
           &.course-staff {
 
             overflow: hidden;
+            padding-right: 0;
 
             .teacher {
               background: #e6e6e6;
@@ -828,7 +914,12 @@ a.uamx_carousel-control {
 
               h3 {
                 font-size: 14px;
-                margin: 1em 0;
+                margin: 1em 0 0.3em;
+              }
+
+              p {
+                font-size: 13px;
+                line-height: 1.5em;
               }
             }
           }
@@ -841,4 +932,46 @@ a.uamx_carousel-control {
       }
     }
   }
+
+  .modal.video-modal {
+    height: max-content;
+  }
+
+  a.uamx_video-icon {
+    position: fixed;
+    top: 72%;
+    right: 0;
+    background-image: url(/static/uamx-theme/images/recurso.png);
+    display: block;
+    width: 60px;
+    height: 80px;
+    background-size: cover;
+    color: white;
+    z-index: 90;
+
+    &:hover {
+      background-image: url(/static/uamx-theme/images/recurso_hover.png);
+      color: white;
+      text-decoration: none;
+    }
+
+    .icon {
+      position: absolute;
+      top: 5px;
+      left: 24px;
+      font-size: 30px;
+    }
+
+    .text {
+      position: absolute;
+      top: 32px;
+      left: 20px;
+      font-size: 10px;
+    }
+  }
+}
+
+/********** GENERAL *************/
+a.btn {
+  border-radius: 0 !important;
 }

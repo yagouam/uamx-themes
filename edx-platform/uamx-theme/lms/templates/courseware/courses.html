@@ -14,10 +14,9 @@
 <%block name="pagetitle">${_("Courses")}</%block>
 
 <!-- BANNER -->
-<div class="uamx-banner_top">
+<div class="uamx-banner_top uamx-banner_top_search">
   <div class="uamx_banner-top-text">
     <h5>Encuentra tu programa en la UAM</h5>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
   </div>
 </div>
 
@@ -34,7 +33,8 @@
             facets = {
               "materias": {},
               "facultades": {},
-              "organizacion": {}
+              "organizacion": {},
+              "invitationonly": {'abierto': 0, 'cerrado': 0}
             }
           %>
           <h2 class="courses-list-title_uamx courses-list-title_uamx-uamx">Innovación Docente</h2>
@@ -54,8 +54,12 @@
                 if 'facultades' not in json_metadata:
                   json_metadata['facultades'] = ['otras']
 
+                if 'organizacion' not in json_metadata:
+                  json_metadata['organizacion'] = ['uamx']
+
                 data_materias = ','.join(json_metadata['materias'])
                 data_facultades = ','.join(json_metadata['facultades'])
+                data_organizacion = ','.join(json_metadata['organizacion'])
 
                 ## Fill facets JSON
                 for key in json_metadata['materias']:
@@ -70,15 +74,20 @@
                   else:
                     facets['facultades'][key] = 1
 
-                ## As organization is same for all items in this list just fill facets number
-                key = 'uamx'
-                if key in facets['organizacion']:
-                  facets['organizacion'][key] += 1
+                for key in json_metadata['organizacion']:
+                  if key in facets['organizacion']:
+                    facets['organizacion'][key] += 1
+                  else:
+                    facets['organizacion'][key] = 1
+
+                ## Fill invitation only filter
+                if course.invitation_only:
+                  facets['invitationonly']['cerrado'] += 1
                 else:
-                  facets['organizacion'][key] = 1
+                  facets['invitationonly']['abierto'] += 1
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-uam_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="uamx">
+              <li class="courses-listing-item course-listing-item_uamx organization-uam_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="uamx" data-invitationonly="${'cerrado' if course.invitation_only else 'abierto'}">
                 <%include file="../course.html" args="course=course" />
               </li>
             %endfor
@@ -101,8 +110,12 @@
                 if 'facultades' not in json_metadata:
                   json_metadata['facultades'] = ['otras']
 
+                if 'organizacion' not in json_metadata:
+                  json_metadata['organizacion'] = ['mooc']
+
                 data_materias = ','.join(json_metadata['materias'])
                 data_facultades = ','.join(json_metadata['facultades'])
+                data_organizacion = ','.join(json_metadata['organizacion'])
 
                 ## Fill facets JSON
                 for key in json_metadata['materias']:
@@ -117,15 +130,17 @@
                   else:
                     facets['facultades'][key] = 1
 
-                ## As organization is same for all items in this list just fill facets number
-                key = 'mooc'
-                if key in facets['organizacion']:
-                  facets['organizacion'][key] += 1
-                else:
-                  facets['organizacion'][key] = 1
+                for key in json_metadata['organizacion']:
+                  if key in facets['organizacion']:
+                    facets['organizacion'][key] += 1
+                  else:
+                    facets['organizacion'][key] = 1
+
+                ## Fill invitation only filter. Currently this property doesnt exists in the model, so is always abierto
+                facets['invitationonly']['abierto'] += 1
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-mooc_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="mooc">
+              <li class="courses-listing-item course-listing-item_uamx organization-mooc_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="mooc" data-invitationonly="abierto">
                 <%include file="../custom_course.html" args="course=course" />
               </li>
             %endfor
@@ -148,8 +163,12 @@
                 if 'facultades' not in json_metadata:
                   json_metadata['facultades'] = ['otras']
 
+                if 'organizacion' not in json_metadata:
+                  json_metadata['organizacion'] = ['fcon']
+
                 data_materias = ','.join(json_metadata['materias'])
                 data_facultades = ','.join(json_metadata['facultades'])
+                data_organizacion = ','.join(json_metadata['organizacion'])
 
                 ## Fill facets JSON
                 for key in json_metadata['materias']:
@@ -164,15 +183,17 @@
                   else:
                     facets['facultades'][key] = 1
 
-                ## As organization is same for all items in this list just fill facets number
-                key = 'fcon'
-                if key in facets['organizacion']:
-                  facets['organizacion'][key] += 1
-                else:
-                  facets['organizacion'][key] = 1
+                for key in json_metadata['organizacion']:
+                  if key in facets['organizacion']:
+                    facets['organizacion'][key] += 1
+                  else:
+                    facets['organizacion'][key] = 1
+
+                ## Fill invitation only filter. Currently this property doesnt exists in the model, so is always abierto
+                facets['invitationonly']['abierto'] += 1
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-fcon_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="fcon">
+              <li class="courses-listing-item course-listing-item_uamx organization-fcon_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="fcon" data-invitationonly="abierto">
                 <%include file="../custom_course.html" args="course=course" />
               </li>
             %endfor
@@ -184,7 +205,9 @@
 KEY_TO_STRING_MAP = {
   'organizacion': 'oferta académica',
   'uamx': 'innovación docente',
-  'fcon': 'formación continua'
+  'fcon': 'formación continua',
+  'invitationonly': 'formato',
+  'cerrado': 'por invitación'
 }
 
 def keyToString (key):

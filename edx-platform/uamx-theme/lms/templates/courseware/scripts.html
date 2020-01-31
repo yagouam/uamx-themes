@@ -3,7 +3,9 @@
 var KEY_TO_STRING_MAP = {
   'organizacion': 'oferta académica',
   'uamx': 'innovación docente',
-  'fcon': 'formación continua'
+  'fcon': 'formación continua',
+  'invitationonly': 'formato',
+  'cerrado': 'por invitación'
 };
 
 var VIEWING_COURSES_TEMPLATE = 'Mostrando ~@PARTIAL@~ de ~@TOTAL@~ cursos.';
@@ -27,6 +29,7 @@ var filters = {
   materias: parse_query_string(query_string).materias,
   organizacion: parse_query_string(query_string).organizacion,
   facultades: parse_query_string(query_string).facultades,
+  invitationonly: parse_query_string(query_string).invitationonly,
 };
 
 $( document ).ready(function onDocumentReady () {
@@ -132,10 +135,11 @@ $( document ).ready(function onDocumentReady () {
       var xfacultades = filters["facultades"] && $(this).data("facultades").match(filters["facultades"]);
       var xmaterias = filters["materias"] && $(this).data("materias").match(filters["materias"]);
       var xorganizacion = filters["organizacion"] && $(this).data("organizacion").match(filters["organizacion"]);
+      var xinvitationonly = filters["invitationonly"] && $(this).data("invitationonly").match(filters["invitationonly"]);
       var xquery = filters["query"] && $(this).find('.course-name').text().match(new RegExp(filters["query"], "i"));
 
-      var countFilters = [filters["facultades"], filters["materias"], filters["organizacion"], filters["query"]].filter(Boolean);
-      var matchingFilters = [xfacultades, xmaterias, xorganizacion, xquery].filter(Boolean);
+      var countFilters = [filters["facultades"], filters["materias"], filters["organizacion"], filters["invitationonly"], filters["query"]].filter(Boolean);
+      var matchingFilters = [xfacultades, xmaterias, xorganizacion, xinvitationonly, xquery].filter(Boolean);
 
       if (countFilters.length === matchingFilters.length) {
         $(this).removeClass('hidden');
@@ -164,8 +168,6 @@ $( document ).ready(function onDocumentReady () {
   }
 
   function renderButtonsCount(filtersCount) {
-
-    console.log(filtersCount);
 
     $('.search-facets-uamx .facet-option').each(function () {
 
