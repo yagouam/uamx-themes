@@ -68,6 +68,7 @@ if len(highlighted_courses) == 0:
           </ul>
         </div>
 
+        %if len(highlighted_courses) > 2:
         <div id="carouselExampleIndicators" class="carousel slide uamx_index-carousel hidden-mobile" data-ride="carousel">
           <ol class="carousel-indicators">
         
@@ -111,6 +112,21 @@ if len(highlighted_courses) == 0:
             <span class="sr-only">Next</span>
           </a>
         </div>
+        %else:
+        <div class="uamx_index-carousel uamx_index-static-carousel hidden-mobile row">
+          %for course in highlighted_courses:
+            %if hasattr(course, 'name'):
+              <div class="${'organization-mooc_uamx' if course.organization == 'edx' else 'organization-fcon_uamx'} col-sm">
+                <%include file="./custom_course.html" args="course=course" />
+              </div>
+            %else:
+              <div class="organization-uam_uamx col-sm">
+                <%include file="./course.html" args="course=course" />
+              </div>
+            %endif
+          %endfor
+        </div>
+        %endif
 
       </section>
 
