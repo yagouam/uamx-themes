@@ -34,8 +34,7 @@ course.display_name_splitted = output
 <article class="course" id="${course.id}" role="region" aria-label="${course.name}">
   <a href="${course.course_url}">
     <header class="course-image">
-      <div class="cover-image">
-        <img src="${course.image_url}" alt="${course.name} ${course.id}" />
+      <div class="cover-image" style="background-image: url(${course.image_url})">
         <div class="learn-more" aria-hidden="true">${_("LEARN MORE")}</div>
       </div>
     </header>

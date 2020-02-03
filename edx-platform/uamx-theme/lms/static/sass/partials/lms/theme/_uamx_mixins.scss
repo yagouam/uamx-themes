@@ -3,6 +3,7 @@
 @mixin course-list-item_uamx ($color) {
   
   border-bottom-color: $color;
+  background-color: $color;
 
   &:hover {
     border-bottom-color: #bebebe;

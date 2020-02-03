@@ -9,6 +9,8 @@ $uamx_green_dark: #34541c;
 
 // Bootstrap overrided colors https://getbootstrap.com/docs/4.0/getting-started/theming/#modify-map
 // https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
+$green: $uamx_green;
+$primary: green;
 
 $colors: (
   "blue":  $uamx_blue,

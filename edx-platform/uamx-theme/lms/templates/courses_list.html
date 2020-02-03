@@ -55,13 +55,15 @@ if len(highlighted_courses) == 0:
         <div class="uamx_index-highlighted-mobile">
           <ul class="list-unstyled">
             %for course in highlighted_courses:
-            <li>
               %if hasattr(course, 'name'):
-                <%include file="./custom_course.html" args="course=course" />
+                <li class="${'organization-fcon_uamx' if course.organization == 'fcon' else 'organization-mooc_uamx'}">
+                  <%include file="./custom_course.html" args="course=course" />
+                </li>
               %else:
-                <%include file="./course.html" args="course=course" />
+                <li class="organization-uam_uamx">
+                  <%include file="./course.html" args="course=course" />
+                </li>
               %endif
-            </li>
             %endfor
           </ul>
         </div>
@@ -85,7 +87,7 @@ if len(highlighted_courses) == 0:
               %endif
                   
                   %if hasattr(course, 'name'):
-                    <div class="uamx_carousel-inneritem-container ${'organization-mooc_uamx' if course.organization else 'orgnization-fcon_uamx'}">
+                    <div class="uamx_carousel-inneritem-container ${'organization-mooc_uamx' if course.organization == 'edx' else 'organization-fcon_uamx'}">
                       <%include file="./custom_course.html" args="course=course" />
                     </div>
                   %else:

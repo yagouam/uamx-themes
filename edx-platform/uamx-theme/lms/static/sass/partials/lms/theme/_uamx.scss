@@ -284,6 +284,14 @@ a.uamx_carousel-control {
     border-right: 1px solid #c8c8c8;
     border-left: 1px solid #c8c8c8;
   }
+
+  .uamx_footer-followus {
+    img {
+      width: 30px;
+      height: auto;
+      vertical-align: top;
+    }
+  }
 }
 
 /** navbar-not-authenticated.html **/
@@ -481,6 +489,14 @@ a.uamx_carousel-control {
     }
   }
 
+  .uamx_banner-top-button {
+    background-color: theme-color("primary");
+
+    &:hover {
+      background-color: darken(theme-color("primary"), 10%);
+    }
+  }
+
   &.uamx-banner_top_search {
     background-image: url(/static/uamx-theme/images/img-hero-2.jpg);
     
@@ -526,9 +542,16 @@ a.uamx_carousel-control {
 
       .cover-image {
         height: 200px;
+        background-position: center;
+        background-size: cover;
 
         &::before {
           height: 200px;
+        }
+
+        .learn-more {
+          left: calc(50% - 75px);
+          width: 150px;
         }
       }
     }
@@ -648,7 +671,7 @@ a.uamx_carousel-control {
 
   .wrapper-search-input {
     float: right !important;
-    margin: 10px 0 0 0;
+    margin: 10px 0 0 1.5% !important;
     width: auto !important;
 
     .discovery-input {
@@ -660,7 +683,7 @@ a.uamx_carousel-control {
       transition: width 0.25s;
 
       &:focus {
-        width: 350px;
+        width: 325px;
       }
     }
 
