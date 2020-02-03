@@ -1,9 +1,49 @@
 <%page expression_filter="h"/>
 <%namespace name='static' file='static_content.html'/>
 <%! 
+
+import json
+
 from django.utils.translation import ugettext as _ 
 from django.urls import reverse
 from six import text_type
+
+from django.contrib.auth.models import User, AnonymousUser
+from courses_edx.models import ExCourseOverview
+from courseware.courses import get_courses
+%>
+
+<%
+
+user = AnonymousUser()
+
+custom_courses = ExCourseOverview.objects.all()
+fcon = [c for c in custom_courses if c.organization == 'fcon']
+moocs = [c for c in custom_courses if c.organization == 'edx']
+uamx = get_courses(user)
+
+def get_highlighted(list):
+  highlighted = []
+
+  for course in list:
+    json_metadata = json.loads('{}')
+
+    if hasattr(course, 'short_description'):
+      if isinstance(course.short_description, unicode) and course.short_description[:1] == '{':
+        json_metadata = json.loads(course.short_description)
+    elif hasattr(course, 'short_desc'):
+      if isinstance(course.short_desc, unicode) and course.short_desc[:1] == '{':
+        json_metadata = json.loads(course.short_desc)
+
+    if 'highlighted' in json_metadata:
+      highlighted.append(course)
+
+  return highlighted
+
+highlighted_courses = get_highlighted(fcon + moocs + uamx)[:9]
+
+if len(highlighted_courses) == 0:
+  highlighted_courses = uamx[:9]
 %>
 
 <section class="courses-container">
@@ -11,18 +51,33 @@ from six import text_type
       <section class="courses">
 
         <h5 class="uamx_index-smalltitles">Cursos destacados</h5>
-        <div id="carouselExampleIndicators" class="carousel slide uamx_index-carousel" data-ride="carousel">
+
+        <div class="uamx_index-highlighted-mobile">
+          <ul class="list-unstyled">
+            %for course in highlighted_courses:
+            <li>
+              %if hasattr(course, 'name'):
+                <%include file="./custom_course.html" args="course=course" />
+              %else:
+                <%include file="./course.html" args="course=course" />
+              %endif
+            </li>
+            %endfor
+          </ul>
+        </div>
+
+        <div id="carouselExampleIndicators" class="carousel slide uamx_index-carousel hidden-mobile" data-ride="carousel">
           <ol class="carousel-indicators">
         
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            %for i in range(3, len(courses[:homepage_course_max]), 3):
+            %for i in range(3, len(highlighted_courses[:homepage_course_max]), 3):
             <li data-target="#carouselExampleIndicators" data-slide-to="${i/3}"></li>
             %endfor
           </ol>
           <div class="carousel-inner">
-            %for i in range(len(courses)):
+            %for i in range(len(highlighted_courses)):
                   
-              <% course = courses[i] %>
+              <% course = highlighted_courses[i] %>
 
               %if i%3 == 0:
               <div class="carousel-item ${'active' if i == 0 else ''}">
@@ -39,7 +94,7 @@ from six import text_type
                     </div>
                   %endif
         
-              %if (i-2)%3 == 0 or i == (len(courses)-1):
+              %if (i-2)%3 == 0 or i == (len(highlighted_courses)-1):
                 </div>  
               </div>
               %endif

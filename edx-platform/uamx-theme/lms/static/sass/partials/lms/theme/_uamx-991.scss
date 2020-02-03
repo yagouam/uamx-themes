@@ -1,0 +1,82 @@
+@media (max-width: 991px) {
+  
+  .uamx_index-search {
+
+    .wrapper-search-input {
+
+      .discovery-input {
+
+        width: 300px;
+
+        &:focus {
+          width: 300px;
+        }
+      }
+    }
+  }
+  
+  .global-header {
+    .nav-links.uamx_header-navbar-not-authenticated {
+      .main {
+        .nav-item {
+            a.uamx_header-navbar-not-authenticated--dropdown-selector::after {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .header-logo {
+      a {
+        margin-left: 0;
+        height: auto;
+        width: auto;
+        flex: 0.05 1 auto;
+        margin: 0;
+        float: none;
+    
+        .logo {
+          margin-left: 0;
+          float: none;
+        }
+      }
+
+      .uamx-header_logos {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+
+    .mobile-menu .mobile-nav-link a {
+      color: theme-color("primary");
+    
+      &:hover {
+        color: #FFFFFF;
+        background-color: theme-color("primary");
+      }
+    }
+  }
+
+  .uamx_index-highlighted-mobile {
+    display: block;
+  }
+
+  footer {
+    font-size: 0.8em;
+    line-height: 2em;
+  }
+}
+
+
+@media screen and (max-width: 979px) and (min-width: 769px) {
+  .find-courses .courses-container .courses .courses-listing .courses-listing-item {
+    width: 48.5% !important;
+  }
+}

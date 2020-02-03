@@ -1,0 +1,30 @@
+
+@media screen and (max-width: 768px) {
+
+  .uamx-search {
+
+    .search-facets.collapse:not(.show) {
+      display: none;
+    }
+
+    .uamx_facet_collapse {
+      display: block;
+    }
+
+    .find-courses .wrapper-search-input {
+      display: block;
+      clear: both;
+      float: left !important;
+      width: 80% !important;
+      margin-right: 0;
+
+      .discovery-input {
+        width: 100% !important;
+      }
+    }
+
+    .courses {
+      width: 100% !important;
+    }
+  }
+}
