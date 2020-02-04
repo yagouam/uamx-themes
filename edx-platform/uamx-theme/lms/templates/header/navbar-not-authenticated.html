@@ -56,7 +56,7 @@ for facultad in list['facultades']:
               <ul class="list-unstyled">
 
             %for li_m in ul_m:
-                <li><a href="https://uamx-pre.uam.es/courses?materias=${li_m}">${li_m}</a></li>
+                <li><a href="/courses?materias=${li_m}">${li_m}</a></li>
             %endfor
 
               </ul>
@@ -73,15 +73,15 @@ for facultad in list['facultades']:
       <hr/>
       <div class="uamx_header-dropdownmenu-list">
         <div>
-          <h6><a href="https://uamx-pre.uam.es/courses?organizacion=uamx">Innovación docente</a></h6>
+          <h6><a href="/courses?organizacion=uamx">Innovación docente</a></h6>
           <p class="small">Cursos online complementarios a la docencia reglada de la UAM.</p>
         </div>
         <div>
-          <h6><a href="https://uamx-pre.uam.es/courses?organizacion=mooc">Moocs</a></h6>
+          <h6><a href="/courses?organizacion=mooc">Moocs</a></h6>
           <p class="small">Cursos online gratuitos de la UAM en la plataforma edX.</p>
         </div>
         <div>
-          <h6><a href="https://uamx-pre.uam.es/courses?organizacion=fcon">Formación continua</a></h6>
+          <h6><a href="/courses?organizacion=fcon">Formación continua</a></h6>
           <p class="small">Estudios propios, cursos de corta duración y formación in company online.</p>
         </div>
       </div>
@@ -99,7 +99,7 @@ for facultad in list['facultades']:
               <ul class="list-unstyled">
 
             %for li_f in ul_f:
-                <li><a href="https://uamx-pre.uam.es/courses?facultades=${li_f}">${li_f}</a></li>
+                <li><a href="/courses?facultades=${li_f}">${li_f}</a></li>
             %endfor
 
               </ul>
