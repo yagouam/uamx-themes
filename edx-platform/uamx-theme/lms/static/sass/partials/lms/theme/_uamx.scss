@@ -71,6 +71,14 @@
     background-size: cover;
     margin: auto;
 
+    &.uamx_carousel-two {
+      width: 48%;
+    }
+
+    &.uamx_carousel-one {
+      width: 100%;
+    }
+
     a {
       position: absolute;
       top: 0;
@@ -387,7 +395,7 @@ a.uamx_carousel-control {
 
       &:hover {
         color: theme-color("primary");
-        font-weight: bold;
+        text-decoration: underline;
       }
 
     }
@@ -495,10 +503,10 @@ a.uamx_carousel-control {
   }
 
   .uamx_banner-top-button {
-    background-color: theme-color("primary");
+    background-color: theme-color("info");
 
     &:hover {
-      background-color: darken(theme-color("primary"), 10%);
+      background-color: darken(theme-color("info"), 10%);
     }
   }
 
@@ -544,6 +552,10 @@ a.uamx_carousel-control {
     margin: 0;
 
     .course-image {
+
+      background-image: url(/static/uamx-theme/images/fc.jpg);
+      background-size: cover;
+      background-position: center;
 
       .cover-image {
         height: 200px;
@@ -713,12 +725,12 @@ a.uamx_carousel-control {
     .header-facet {
       border-top: 2px solid #fff;
       padding: 10px;
-      text-transform: capitalize;
     }
 
     .facet-option {
       color: #888;
       white-space: normal;
+      padding-right: 25px;
 
       &:hover {
         color: #fff;
@@ -730,6 +742,10 @@ a.uamx_carousel-control {
 
       &.selected {
         color: #888;
+      }
+
+      .count {
+        top: 5px;
       }
     }
   }
@@ -779,175 +795,213 @@ a.uamx_carousel-control {
     margin: 0;
   }
 
-  .course-profile {
-    padding-top: 5em !important;
-    position: relative;
+  .course-info {
 
-    .course-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
+    header.course-profile {
+      background: none;
+      background-image: none;
       height: auto;
-    }
-
-    .intro-inner-wrapper {
-      
-      background-color: rgba(200,200,200,0.6) !important;
-      padding: 1em 7%;
-      margin: 0 !important;
-
-      .intro {
-        width: auto !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-
-        .heading-group {
-          margin: 0 !important;
-          border: 0 !important;
-          box-shadow: none !important;
-
-          h1 {
-            font-size: 1.5em;
-            font-weight: bold !important;
-            text-shadow: none !important;
-          }
+      box-shadow: none;
+      border-bottom: none;
+      padding-top: 5em !important;
+      position: relative;
+  
+      .uamx_about-header-button {
+  
+        background: theme-color("info");
+  
+        &:hover {
+          background: darken(theme-color("info"), 10%);
         }
-
-        .main-cta span.register.disabled {
-          padding: 0.5em 1em;
+      }
+  
+      .course-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+      }
+  
+      .intro-inner-wrapper {
+        
+        background-color: rgba(200,200,200,0.6) !important;
+        padding: 1em 7%;
+        margin: 0 !important;
+        border: 0;
+        box-shadow: none;
+  
+        .media .hero {
+          border: 0;
         }
-   
-        .register.disabled {
+  
+        .intro {
           width: auto !important;
-          padding: 0.5em;
-        }
-      }
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
   
-      .important-dates {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+          .heading-group {
+            margin: 0 !important;
+            border: 0 !important;
+            box-shadow: none !important;
   
-        .important-dates-item {
-  
-          position: relative;
-          font-size: 0.9em;
-          width: 48%;
-          overflow: hidden;
-          margin-top: 4%;
-  
-          &:nth-child(even) {float:right}
-          &:nth-child(odd) {float:left}
-  
-          .important-dates-item-title {
-            font-weight: bold;
-            margin: 0;
-            margin-left: 35px;
-            line-height: 12px;
-          }
-  
-          .important-dates-item-text {
-            margin-left: 35px;
-            line-height: 12px;
-          }
-  
-          .icon {
-            position: absolute;
-            top: 5px;
-            left: 0;
-            font-size: 2em;
-          }
-        }
-      }
-    }
-  }
-
-  .container {
-    max-width: none;
-    padding: 0;
-
-    .details {
-      width: auto;
-      float: none;
-      margin: 0;
-
-      .inner-wrapper {
-
-        section {
-          padding: 0.5em 7% 0;
-          font-size: 0.85em;
-          line-height: 2.1em;
-          clear: both;
-
-          h2 {
-            font-weight: bold;
-            font-size: 18px;
-            margin: 0em 0 1.5em;
-          }
-
-          h3 {
-            font-size: 14px;
-          }
-
-          p {
-            font-size: 14px;
-          }
-
-          &.about {
-            background: theme-color("primary");
-            color: #fff;
-            padding-top: 3em;
-            padding-bottom: 3em;
-          }
-
-          &.course-staff {
-
-            overflow: hidden;
-            padding-right: 0;
-
-            .teacher {
-              background: #e6e6e6;
-              float: left;
-              max-width: 220px;
-              overflow: hidden;
-              padding: 10px;
-              height: 325px;
-              margin-right: 30px;
-
-              .teacher-image {
-                width: 200px;
-                height: 150px;
-                overflow: hidden;
-                float: none;
-
-                img {
-                  width: 100%;
-                  border: none;
-                  outline: none;
-                }
-              }
-
-              h3 {
-                font-size: 14px;
-                margin: 1em 0 0.3em;
-              }
-
-              p {
-                font-size: 13px;
-                line-height: 1.5em;
-              }
+            h1 {
+              font-size: 1.5em;
+              font-weight: bold !important;
+              text-shadow: none !important;
             }
           }
-
-          &.faq .responses {
-            float: none;
-            padding: 0;
+  
+          .main-cta span.register.disabled {
+            padding: 0.5em 1em;
+          }
+     
+          .register.disabled {
+            width: auto !important;
+            padding: 0.5em;
+          }
+        }
+    
+        .important-dates {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+    
+          .important-dates-item {
+    
+            position: relative;
+            font-size: 0.9em;
+            width: 48%;
+            overflow: hidden;
+            margin-top: 4%;
+    
+            &:nth-child(even) {float:right}
+            &:nth-child(odd) {float:left}
+    
+            .important-dates-item-title {
+              font-weight: bold;
+              margin: 0;
+              margin-left: 35px;
+              line-height: 12px;
+            }
+    
+            .important-dates-item-text {
+              margin-left: 35px;
+              line-height: 12px;
+            }
+    
+            .icon {
+              position: absolute;
+              top: 5px;
+              left: 0;
+              font-size: 2em;
+            }
           }
         }
       }
+    }
+  
+    .container {
+      max-width: none;
+      padding: 0;
+  
+      .details {
+        width: auto;
+        float: none;
+        margin: 0;
+        font-family: $font-family-sans-serif;
+  
+        .inner-wrapper {
+  
+          section {
+            padding: 0.5em 7% 0;
+            font-size: 0.85em;
+            line-height: 2.1em;
+            clear: both;
+  
+            h2 {
+              font-weight: bold;
+              font-size: 18px;
+              margin: 0em 0 1.5em;
+              font-family: $font-family-sans-serif;
+            }
+  
+            h3 {
+              font-size: 14px;
+            }
+  
+            p {
+              font-size: 14px;
+            }
+  
+            &.about {
+              background: theme-color("primary");
+              color: #fff;
+              padding-top: 3em;
+              padding-bottom: 3em;
+
+            }
+  
+            &.course-staff {
+  
+              overflow: hidden;
+              padding-right: 0;
+  
+              .teacher {
+                background: #e6e6e6;
+                float: left;
+                max-width: 220px;
+                overflow: hidden;
+                padding: 10px;
+                height: 325px;
+                margin-right: 30px;
+  
+                .teacher-image {
+                  width: 200px;
+                  height: 150px;
+                  overflow: hidden;
+                  float: none;
+  
+                  img {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                  }
+                }
+  
+                h3 {
+                  font-size: 14px;
+                  margin: 1em 0 0.3em;
+                }
+  
+                p {
+                  font-size: 13px;
+                  line-height: 1.5em;
+                }
+              }
+            }
+  
+            &.faq .responses {
+              float: none;
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+
+    &.uamx_about-org-fcon .container .details .inner-wrapper section.about {
+      background: theme-color("secondary");
+    }
+
+    &.uamx_about-org-mooc .container .details .inner-wrapper section.about {
+      background: theme-color("info");
+    }
+
+    &.uamx_about-org-uam .container .details .inner-wrapper section.about {
+      background: theme-color("primary");
     }
   }
 
