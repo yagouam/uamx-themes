@@ -11,6 +11,9 @@ from edxmako.shortcuts import marketing_link
 from openedx.core.djangolib.markup import HTML, Text
 from openedx.core.lib.courses import course_image_url
 from six import string_types
+
+import json
+from courses_edx.utils import get_course_organization
 %>
 
 <%inherit file="../main.html" />
@@ -109,7 +112,31 @@ from six import string_types
 
 <%block name="pagetitle">${course.display_name_with_default}</%block>
 
-<section class="course-info">
+<%
+
+short_d = get_course_about_section(request, course, 'short_description')
+
+json_metadata = json.loads('{}')
+if short_d:
+  if  isinstance(short_d, unicode) and short_d[:1] == '{':
+    json_metadata = json.loads(short_d)
+
+
+MAP = {
+  'uamx': 'uamx_about-org-uam',
+  'fcon': 'uamx_about-org-fcon',
+  'edx': 'uamx_about-org-mooc'
+}
+
+org_key = course.display_org_with_default if not 'organizacion' in json_metadata else json_metadata['organizacion']
+
+if org_key not in MAP:
+  org_key = 'uamx'
+
+uamx_className = MAP[org_key]
+%>
+
+<section class="course-info ${uamx_className}">
 
   <%block name="course_about_header">
   <header class="course-profile">
@@ -125,7 +152,7 @@ from six import string_types
         <div class="main-cta">
         %if user.is_authenticated and registered:
           %if show_courseware_link:
-            <a href="${course_target}">
+            <a href="${course_target}" class="btn btn-primary uamx_about-header-button">
           %endif
 
           <span class="register disabled">${_("You are enrolled in this course")}</span>
@@ -173,7 +200,7 @@ from six import string_types
           <div id="register_error"></div>
         %elif allow_anonymous:
           %if show_courseware_link:
-            <a href="${course_target}">
+            <a href="${course_target}" class="btn btn-primary uamx_about-header-button">
             <strong>${_("View Course")}</strong>
             </a>
           %endif
@@ -188,7 +215,7 @@ from six import string_types
             else:
               href_class = "register"
           %>
-          <a href="${reg_href}" class="btn btn-primary">
+          <a href="${reg_href}" class="btn btn-primary uamx_about-header-button">
             ${_("Enroll in {course_name}").format(course_name=course.display_number_with_default)}
           </a>
           <div id="register_error"></div>

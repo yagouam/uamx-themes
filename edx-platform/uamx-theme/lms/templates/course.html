@@ -33,7 +33,12 @@ course.display_name_splitted = output
 %>
 
 <article class="course" id="${course.id}" role="region" aria-label="${course.display_name_with_default}">
-  <a href="${reverse('about_course', args=[text_type(course.id)])}">
+  % if hasattr(course, 'course_url'):
+    <a href="${course.course_url}">
+  % else:
+    <a href="${reverse('about_course', args=[text_type(course.id)])}">
+  % endif
+
     <header class="course-image">
       <div class="cover-image" style="background-image: url(${course.course_image_url})">
         <div class="learn-more" aria-hidden="true">${_("LEARN MORE")}</div>

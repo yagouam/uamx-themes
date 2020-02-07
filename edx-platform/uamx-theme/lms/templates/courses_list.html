@@ -9,11 +9,19 @@ from django.urls import reverse
 from six import text_type
 
 from django.contrib.auth.models import User, AnonymousUser
-from courses_edx.models import ExCourseOverview
+
 from courseware.courses import get_courses
+from courses_edx.models import ExCourseOverview
+from courses_edx.utils import get_course_organization
 %>
 
 <%
+
+MAP = {
+  'uamx': 'organization-uam_uamx',
+  'fcon': 'organization-fcon_uamx',
+  'edx': 'organization-mooc_uamx'
+}
 
 user = AnonymousUser()
 
@@ -21,6 +29,18 @@ custom_courses = ExCourseOverview.objects.all()
 fcon = [c for c in custom_courses if c.organization == 'fcon']
 moocs = [c for c in custom_courses if c.organization == 'edx']
 uamx = get_courses(user)
+
+def course_to_dict(course):
+
+  key = get_course_organization(course, course.display_org_with_default)
+
+  if key not in MAP:
+    key = 'uamx'
+
+  return {
+    'org': MAP[key],
+    'course': course
+  }
 
 def get_highlighted(list):
   highlighted = []
@@ -44,6 +64,8 @@ highlighted_courses = get_highlighted(fcon + moocs + uamx)[:9]
 
 if len(highlighted_courses) == 0:
   highlighted_courses = uamx[:9]
+
+highlighted_list = map(course_to_dict, highlighted_courses)
 %>
 
 <section class="courses-container">
@@ -54,50 +76,49 @@ if len(highlighted_courses) == 0:
 
         <div class="uamx_index-highlighted-mobile">
           <ul class="list-unstyled">
-            %for course in highlighted_courses:
-              %if hasattr(course, 'name'):
-                <li class="${'organization-fcon_uamx' if course.organization == 'fcon' else 'organization-mooc_uamx'}">
-                  <%include file="./custom_course.html" args="course=course" />
-                </li>
-              %else:
-                <li class="organization-uam_uamx">
-                  <%include file="./course.html" args="course=course" />
-                </li>
-              %endif
+            %for dict in highlighted_list:
+              <li class="${dict['org']}">
+                <%include file="./course.html" args="course=dict['course']" />
+              </li>
             %endfor
           </ul>
         </div>
 
-        %if len(highlighted_courses) > 2:
-        <div id="carouselExampleIndicators" class="carousel slide uamx_index-carousel hidden-mobile" data-ride="carousel">
+        %if len(highlighted_list) > 3:
+        <div id="carouselExampleIndicators" class="carousel slide uamx_index-carousel hidden-mobile" data-ride="carousel" data-interval="false">
           <ol class="carousel-indicators">
         
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            %for i in range(3, len(highlighted_courses[:homepage_course_max]), 3):
+            %for i in range(3, len(highlighted_list[:homepage_course_max]), 3):
             <li data-target="#carouselExampleIndicators" data-slide-to="${i/3}"></li>
             %endfor
           </ol>
           <div class="carousel-inner">
-            %for i in range(len(highlighted_courses)):
+            %for i in range(len(highlighted_list)):
                   
-              <% course = highlighted_courses[i] %>
+              <% dict = highlighted_list[i] %>
 
               %if i%3 == 0:
+
+              <%
+                carousel_className = ''
+
+                if len(highlighted_list) - i == 2:
+                  carousel_className = 'uamx_carousel-two'
+                elif len(highlighted_list) - i == 1:
+                  carousel_className = 'uamx_carousel-one'
+                endif
+              %>
+
               <div class="carousel-item ${'active' if i == 0 else ''}">
                 <div class="uamx_carousel-inneritem">
               %endif
                   
-                  %if hasattr(course, 'name'):
-                    <div class="uamx_carousel-inneritem-container ${'organization-mooc_uamx' if course.organization == 'edx' else 'organization-fcon_uamx'}">
-                      <%include file="./custom_course.html" args="course=course" />
+                    <div class="uamx_carousel-inneritem-container ${dict['org']} ${carousel_className}">
+                      <%include file="./course.html" args="course=dict['course']" />
                     </div>
-                  %else:
-                    <div class="uamx_carousel-inneritem-container organization-uam_uamx">
-                      <%include file="./course.html" args="course=course" />
-                    </div>
-                  %endif
         
-              %if (i-2)%3 == 0 or i == (len(highlighted_courses)-1):
+              %if (i-2)%3 == 0 or i == (len(highlighted_list)-1):
                 </div>  
               </div>
               %endif
@@ -114,16 +135,10 @@ if len(highlighted_courses) == 0:
         </div>
         %else:
         <div class="uamx_index-carousel uamx_index-static-carousel hidden-mobile row">
-          %for course in highlighted_courses:
-            %if hasattr(course, 'name'):
-              <div class="${'organization-mooc_uamx' if course.organization == 'edx' else 'organization-fcon_uamx'} col-sm">
-                <%include file="./custom_course.html" args="course=course" />
-              </div>
-            %else:
-              <div class="organization-uam_uamx col-sm">
-                <%include file="./course.html" args="course=course" />
-              </div>
-            %endif
+          %for course in highlighted_list:
+            <div class="${dict['org']} col-sm">
+              <%include file="./course.html" args="course=dict['course']" />
+            </div>
           %endfor
         </div>
         %endif

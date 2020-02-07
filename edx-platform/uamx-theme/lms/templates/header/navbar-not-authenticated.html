@@ -28,6 +28,9 @@ list = get_materias_and_facultades_list()
 ul_materias = [[]]
 ul_facultades = [[]]
 
+list['materias'].sort()
+list['facultades'].sort()
+
 for materia in list['materias']:
   ul_materias[-1].append(materia)
 
@@ -39,8 +42,9 @@ for facultad in list['facultades']:
 
   if len(ul_facultades[-1]) % 4 == 0:
     ul_facultades.append([])
-    
+
 %>
+
 
 <nav class="nav-links uamx_header-navbar-not-authenticated" aria-label=${_("Supplemental Links")}>
   <div class="main">
@@ -73,16 +77,16 @@ for facultad in list['facultades']:
       <hr/>
       <div class="uamx_header-dropdownmenu-list">
         <div>
-          <h6><a href="https://uamx-pre.uam.es/courses?organizacion=uamx">Innovación docente</a></h6>
-          <p class="small">Cursos online complementarios a la docencia reglada de la UAM.</p>
-        </div>
-        <div>
           <h6><a href="https://uamx-pre.uam.es/courses?organizacion=mooc">Moocs</a></h6>
           <p class="small">Cursos online gratuitos de la UAM en la plataforma edX.</p>
         </div>
         <div>
           <h6><a href="https://uamx-pre.uam.es/courses?organizacion=fcon">Formación continua</a></h6>
           <p class="small">Estudios propios, cursos de corta duración y formación in company online.</p>
+        </div>
+        <div>
+          <h6><a href="https://uamx-pre.uam.es/courses?organizacion=uamx">Innovación docente</a></h6>
+          <p class="small">Cursos online complementarios a la docencia reglada de la UAM.</p>
         </div>
       </div>
     </div>

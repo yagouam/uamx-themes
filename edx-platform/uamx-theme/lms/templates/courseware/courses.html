@@ -5,6 +5,8 @@
   import ast
   from django.utils.translation import ugettext as _
   from openedx.core.djangolib.js_utils import js_escaped_string, dump_js_escaped_json
+
+  from courses_edx.utils import get_course_metadata
 %>
 <%inherit file="../main.html" />
 
@@ -28,64 +30,20 @@
         <%include file="./uamx_facets_filters.html" args="uamx=courses_uamx,moocs=courses_moocs,fcon=courses_fcon"/>
 
         <div class="courses" role="region" aria-label="${_('List of Courses')}">
-          <h2 class="courses-list-title_uamx courses-list-title_uamx-uamx">Innovación Docente</h2>
-          <ul class="courses-listing courses-list">
-            %for course in courses_uamx:
-              <%
-                ## Manage data-src for each course/item
-
-                if isinstance(course.short_description, unicode) and course.short_description[:1] == '{':
-                  json_metadata = json.loads(course.short_description)
-                else:
-                  json_metadata = json.loads('{}')
-
-                if 'materias' not in json_metadata:
-                  json_metadata['materias'] = ['otras']
-
-                if 'facultades' not in json_metadata:
-                  json_metadata['facultades'] = ['otras']
-
-                if 'organizacion' not in json_metadata:
-                  json_metadata['organizacion'] = ['uamx']
-
-                data_materias = ','.join(json_metadata['materias'])
-                data_facultades = ','.join(json_metadata['facultades'])
-                data_organizacion = ','.join(json_metadata['organizacion'])
-              %>
-
-              <li class="courses-listing-item course-listing-item_uamx organization-uam_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="uamx" data-invitationonly="${'cerrado' if course.invitation_only else 'abierto'}">
-                <%include file="../course.html" args="course=course" />
-              </li>
-            %endfor
-          </ul>
 
           <h2 class="courses-list-title_uamx courses-list-title_uamx-mooc">MOOC</h2>
           <ul class="courses-listing courses-list courses-moocs_uamx">
             %for course in courses_moocs:
               <%
                 ## Manage data-src for each course/item
-
-                if isinstance(course.short_desc, unicode) and course.short_desc[:1] == '{':
-                  json_metadata = json.loads(course.short_desc)
-                else:
-                  json_metadata = json.loads('{}')
-
-                if 'materias' not in json_metadata:
-                  json_metadata['materias'] = ['otras']
-
-                if 'facultades' not in json_metadata:
-                  json_metadata['facultades'] = ['otras']
-
-                if 'organizacion' not in json_metadata:
-                  json_metadata['organizacion'] = ['mooc']
-
-                data_materias = ','.join(json_metadata['materias'])
-                data_facultades = ','.join(json_metadata['facultades'])
-                data_organizacion = ','.join(json_metadata['organizacion'])
+                meta = get_course_metadata(course)
+                data_materias = ','.join('otras' if not 'materias' in meta else meta['materias'])
+                data_facultades = ','.join('otras' if not 'facultades' in meta else meta['facultades'])
+                data_invitationonly = 'cerrado' if hasattr(course, 'invitation_only') and course.invitation_only else 'abierto'
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-mooc_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="mooc" data-invitationonly="abierto">
-                <%include file="../custom_course.html" args="course=course" />
+              <li class="courses-listing-item course-listing-item_uamx organization-mooc_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="mooc" data-invitationonly="${data_invitationonly}">
+                <%include file="../course.html" args="course=course" />
               </li>
             %endfor
           </ul>
@@ -95,32 +53,34 @@
             %for course in courses_fcon:
               <%
                 ## Manage data-src for each course/item
-
-                if isinstance(course.short_desc, unicode) and course.short_desc[:1] == '{':
-                  json_metadata = json.loads(course.short_desc)
-                else:
-                  json_metadata = json.loads('{}')
-
-                if 'materias' not in json_metadata:
-                  json_metadata['materias'] = ['otras']
-
-                if 'facultades' not in json_metadata:
-                  json_metadata['facultades'] = ['otras']
-
-                if 'organizacion' not in json_metadata:
-                  json_metadata['organizacion'] = ['fcon']
-
-                data_materias = ','.join(json_metadata['materias'])
-                data_facultades = ','.join(json_metadata['facultades'])
-                data_organizacion = ','.join(json_metadata['organizacion'])
+                meta = get_course_metadata(course)
+                data_materias = ','.join('otras' if not 'materias' in meta else meta['materias'])
+                data_facultades = ','.join('otras' if not 'facultades' in meta else meta['facultades'])
+                data_invitationonly = 'cerrado' if hasattr(course, 'invitation_only') and course.invitation_only else 'abierto'
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-fcon_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="fcon" data-invitationonly="abierto">
-                <%include file="../custom_course.html" args="course=course" />
+              <li class="courses-listing-item course-listing-item_uamx organization-fcon_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="fcon" data-invitationonly="${data_invitationonly}">
+                <%include file="../course.html" args="course=course" />
               </li>
             %endfor
           </ul>
 
+          <h2 class="courses-list-title_uamx courses-list-title_uamx-uamx">Innovación Docente</h2>
+          <ul class="courses-listing courses-list">
+            %for course in courses_uamx:
+              <%
+                ## Manage data-src for each course/item
+                meta = get_course_metadata(course)
+                data_materias = ','.join('otras' if not 'materias' in meta else meta['materias'])
+                data_facultades = ','.join('otras' if not 'facultades' in meta else meta['facultades'])
+                data_invitationonly = 'cerrado' if course.invitation_only else 'abierto'
+              %>
+
+              <li class="courses-listing-item course-listing-item_uamx organization-uam_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="uamx" data-invitationonly="${data_invitationonly}">
+                <%include file="../course.html" args="course=course" />
+              </li>
+            %endfor
+          </ul>
         </div>
 
       </section>
