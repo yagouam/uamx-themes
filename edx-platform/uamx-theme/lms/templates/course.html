@@ -8,11 +8,17 @@ from six import text_type
 <%page args="course" expression_filter="h"/>
 
 <%
+"""
+Workaround to prevent too long titles.
+NOTE: We cannot make it in CSS as title could be in 2 lines, and css-overflow does not support it
+"""
 MAX_LENGTH = 27
 baseString = course.display_name_with_default
 splitted = baseString.split(" ")
 output = splitted.pop(0)
 
+# Split title, add line breaks and final dots
+# TODO: this is clearly not responsive, investigate if there is a better way
 while len(splitted) > 0:
   nextWord = splitted.pop(0)
   nextWordWithSpace = " " + nextWord
@@ -28,7 +34,7 @@ while len(splitted) > 0:
   else:
     output += nextWordWithSpace;
 
-# print(output);
+# use display_name_splitted instead of desplay_name_with_default
 course.display_name_splitted = output
 %>
 

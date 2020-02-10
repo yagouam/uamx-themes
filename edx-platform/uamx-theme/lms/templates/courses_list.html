@@ -16,13 +16,79 @@ from courses_edx.utils import get_course_organization
 %>
 
 <%
-
-MAP = {
+""" 
+Define classNames dictionary for each organization, only for theme color purposes
+"""
+CLASS_MAP = {
   'uamx': 'organization-uam_uamx',
   'fcon': 'organization-fcon_uamx',
   'edx': 'organization-mooc_uamx'
 }
 
+"""
+Function to map each course into a dictionary of course/(organization className). Useful for theming the course's colors
+"""
+def course_to_dict(course):
+
+  """
+  Parameters
+  ----------
+  course : EdxCourseOverview | CourseOverview
+  course model, where we search for the organization name
+
+  Returns
+  -------
+  list
+    dictionary, with 'org_className' as the organization className and 'course' with raw course model
+  """
+
+  key = get_course_organization(course, course.display_org_with_default)
+
+  if key not in CLASS_MAP:
+    key = 'uamx'
+
+  return {
+    'org_className': CLASS_MAP[key],
+    'course': course
+  }
+
+"""
+Function to filter highlighted courses from the courses list. 
+
+There is a variable in short_description's json named 'highlighted'. It could be filled with whatever value, if the variable exists then the course is marked as highlighted
+"""
+def get_highlighted(list):
+
+  """
+  Parameters
+  ----------
+  list : list
+  courses list to be filtered
+
+  Returns
+  -------
+  list
+    a list of courses marked as highlighted
+  """
+
+  highlighted = []
+
+  for course in list:
+    json_metadata = json.loads('{}')
+
+    # 'highlighted' is a param in short_description json
+    if hasattr(course, 'short_description'):
+      if isinstance(course.short_description, unicode) and course.short_description[:1] == '{':
+        json_metadata = json.loads(course.short_description)
+
+    if 'highlighted' in json_metadata:
+      highlighted.append(course)
+
+  return highlighted
+
+"""
+Retrieve courses and fill highlighted_list
+"""
 user = AnonymousUser()
 
 custom_courses = ExCourseOverview.objects.all()
@@ -30,41 +96,13 @@ fcon = [c for c in custom_courses if c.organization == 'fcon']
 moocs = [c for c in custom_courses if c.organization == 'edx']
 uamx = get_courses(user)
 
-def course_to_dict(course):
-
-  key = get_course_organization(course, course.display_org_with_default)
-
-  if key not in MAP:
-    key = 'uamx'
-
-  return {
-    'org': MAP[key],
-    'course': course
-  }
-
-def get_highlighted(list):
-  highlighted = []
-
-  for course in list:
-    json_metadata = json.loads('{}')
-
-    if hasattr(course, 'short_description'):
-      if isinstance(course.short_description, unicode) and course.short_description[:1] == '{':
-        json_metadata = json.loads(course.short_description)
-    elif hasattr(course, 'short_desc'):
-      if isinstance(course.short_desc, unicode) and course.short_desc[:1] == '{':
-        json_metadata = json.loads(course.short_desc)
-
-    if 'highlighted' in json_metadata:
-      highlighted.append(course)
-
-  return highlighted
-
 highlighted_courses = get_highlighted(fcon + moocs + uamx)[:9]
 
+# Fallback if there are no highlighted courses, show the ones in uamx list
 if len(highlighted_courses) == 0:
   highlighted_courses = uamx[:9]
 
+# Map courses into a list of dictionarys that contain the organization CSS className and the course itself
 highlighted_list = map(course_to_dict, highlighted_courses)
 %>
 
@@ -74,16 +112,22 @@ highlighted_list = map(course_to_dict, highlighted_courses)
 
         <h5 class="uamx_index-smalltitles">Cursos destacados</h5>
 
+        <!--
+        Highlighted courses list, only for mobiles
+        -->
         <div class="uamx_index-highlighted-mobile">
           <ul class="list-unstyled">
             %for dict in highlighted_list:
-              <li class="${dict['org']}">
+              <li class="${dict['org_className']}">
                 <%include file="./course.html" args="course=dict['course']" />
               </li>
             %endfor
           </ul>
         </div>
 
+        <!--
+        Highlighted courses list for desktop. If there are more than 3 courses, add the carousel component.
+        -->
         %if len(highlighted_list) > 3:
         <div id="carouselExampleIndicators" class="carousel slide uamx_index-carousel hidden-mobile" data-ride="carousel" data-interval="false">
           <ol class="carousel-indicators">
@@ -101,6 +145,9 @@ highlighted_list = map(course_to_dict, highlighted_courses)
               %if i%3 == 0:
 
               <%
+                """
+                When there are 1 or 2 courses left to be shown inside the carousel, add this classes to make courses bigger.
+                """
                 carousel_className = ''
 
                 if len(highlighted_list) - i == 2:
@@ -114,7 +161,7 @@ highlighted_list = map(course_to_dict, highlighted_courses)
                 <div class="uamx_carousel-inneritem">
               %endif
                   
-                    <div class="uamx_carousel-inneritem-container ${dict['org']} ${carousel_className}">
+                    <div class="uamx_carousel-inneritem-container ${dict['org_className']} ${carousel_className}">
                       <%include file="./course.html" args="course=dict['course']" />
                     </div>
         
@@ -134,9 +181,12 @@ highlighted_list = map(course_to_dict, highlighted_courses)
           </a>
         </div>
         %else:
+        <!--
+        If there are 3 or lesscourses, do not use the carousel component.
+        -->
         <div class="uamx_index-carousel uamx_index-static-carousel hidden-mobile row">
           %for course in highlighted_list:
-            <div class="${dict['org']} col-sm">
+            <div class="${dict['org_className']} col-sm">
               <%include file="./course.html" args="course=dict['course']" />
             </div>
           %endfor

@@ -15,6 +15,10 @@ from courses_edx.utils import get_course_metadata,get_course_organization
 <%page args="uamx,moocs,fcon" expression_filter="h"/>
 
 <%
+"""
+Facets dictionary keys are used as titles in facet's filter list. 
+Some of them need to be transformed with this map
+"""
 KEY_TO_STRING_MAP = {
   'organizacion': 'Oferta académica',
   'uamx': 'Innovación docente',
@@ -28,12 +32,29 @@ KEY_TO_STRING_MAP = {
   'abierto': 'Abierto'
 }
 
+"""
+Get KEY_TO_STRING_MAP variabe if exists, if not, capitalize the string (only first letter)
+"""
 def keyToString (key):
+  """
+  Parameters
+  ----------
+  key : str
+    The key in json dictionary
+
+  Returns
+  -------
+  string : str
+    A string to be shown as title
+  """
   return key.capitalize() if not key in KEY_TO_STRING_MAP else KEY_TO_STRING_MAP[key]
 %>
 
 <%
-## Create facets dictionary
+"""
+Facet filter list is filled by the 'facets' dictionary data
+We create the dictionary with empty data, and fill it with short_description json metadata for each course
+"""
 facets = {
   'materias': {},
   'facultades': {},
@@ -41,7 +62,19 @@ facets = {
   'invitationonly': {'abierto': 0, 'cerrado': 0}
 }
 
-def add (course, org):
+"""
+Following function fills 'facets' dictionary with each course metadata
+"""
+def add_metadata (course, default_org):
+  """
+  Parameters
+  ---------
+  course: CourseOverview | EdxCourseOverview
+    The course raw data
+  default_org: str
+    Default course organization
+  """
+
   json_metadata = get_course_metadata(course)
 
   for key in json_metadata['materias']:
@@ -56,7 +89,8 @@ def add (course, org):
     else:
       facets['facultades'][key] = 1
 
-  key_org = get_course_organization(course, org)
+  # organization may be overriden by the json metadata. The following use get_course_organization from courses_edx.utils to retrieve the correct organization
+  key_org = get_course_organization(course, default_org)
   if key_org in facets['organizacion']:
     facets['organizacion'][key_org] += 1
   else:
@@ -67,14 +101,18 @@ def add (course, org):
   else:
     facets['invitationonly']['abierto'] += 1
 
+"""
+Execute add_metadata function with each element in each list of courses
+"""
+
 for course in uamx:
-  add(course, 'uamx')
+  add_metadata(course, 'uamx')
 
 for course in moocs:
-  add(course, 'mooc')
+  add_metadata(course, 'mooc')
 
 for course in fcon:
-  add(course, 'fcon')
+  add_metadata(course, 'fcon')
 
 %>
 

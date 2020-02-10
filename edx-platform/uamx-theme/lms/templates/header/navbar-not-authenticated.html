@@ -23,6 +23,9 @@ from courses_edx.utils import get_materias_and_facultades_list
 %>
 
 <%
+"""
+Fill the list of materias and facultades to be shown in header dropdowns.
+"""
 list = get_materias_and_facultades_list()
 
 ul_materias = [[]]
@@ -34,12 +37,14 @@ list['facultades'].sort()
 for materia in list['materias']:
   ul_materias[-1].append(materia)
 
+  # break list into sublists of 4 elements
   if len(ul_materias[-1]) % 4 == 0:
     ul_materias.append([])
  
 for facultad in list['facultades']:
   ul_facultades[-1].append(facultad)
 
+  # break list into sublists of 4 elements
   if len(ul_facultades[-1]) % 4 == 0:
     ul_facultades.append([])
 

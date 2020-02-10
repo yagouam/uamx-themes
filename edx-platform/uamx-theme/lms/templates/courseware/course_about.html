@@ -114,26 +114,32 @@ from courses_edx.utils import get_course_organization
 
 <%
 
-short_d = get_course_about_section(request, course, 'short_description')
+"""
+Workaround to add a className depending on organization
 
+NOTE: We cannot use our courses_edx.utils because in this template 'course' is not a CourseOverview | EdxCourseOverview object, but a custom 'about page' data
+"""
+
+CLASS_MAP = {
+  'uamx': 'uamx_about-org-uam',
+  'fcon': 'uamx_about-org-fcon',
+  'edx': 'uamx_about-org-mooc'
+}
+ 
+# Retrieve metadata and parse json
+short_d = get_course_about_section(request, course, 'short_description')
 json_metadata = json.loads('{}')
 if short_d:
   if  isinstance(short_d, unicode) and short_d[:1] == '{':
     json_metadata = json.loads(short_d)
 
-
-MAP = {
-  'uamx': 'uamx_about-org-uam',
-  'fcon': 'uamx_about-org-fcon',
-  'edx': 'uamx_about-org-mooc'
-}
-
+# Get organization key and fill className
 org_key = course.display_org_with_default if not 'organizacion' in json_metadata else json_metadata['organizacion']
 
-if org_key not in MAP:
+if org_key not in CLASS_MAP:
   org_key = 'uamx'
 
-uamx_className = MAP[org_key]
+uamx_className = CLASS_MAP[org_key]
 %>
 
 <section class="course-info ${uamx_className}">
@@ -227,6 +233,7 @@ uamx_className = MAP[org_key]
       <div class="course-summary col-sm-5">
         <%block name="course_about_important_dates">
         <ol class="important-dates">
+          <!-- Remove first element of list because it only displays the course's id -->
           <!--
           <li class="important-dates-item"><span class="icon fa fa-info-circle" aria-hidden="true"></span><p class="important-dates-item-title">${_("Course Number")}</p><span class="important-dates-item-text course-number">${course.display_number_with_default}</span></li>
           -->
