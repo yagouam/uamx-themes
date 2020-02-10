@@ -812,12 +812,17 @@ a.uamx_carousel-control {
       padding-top: 5em !important;
       position: relative;
   
-      .uamx_about-header-button {
+      .uamx_about-header-button,
+      .uamx_about-header-button.add-to-cart,
+      .uamx_about-header-button.register {
   
-        background: theme-color("info");
+        background: theme-color("info") !important;
+        box-shadow: none !important;
+        border: 0 !important;
+        text-shadow: none !important;
   
         &:hover {
-          background: darken(theme-color("info"), 10%);
+          background: darken(theme-color("info"), 10%) !important;
         }
       }
   
