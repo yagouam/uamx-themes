@@ -357,6 +357,12 @@ a.uamx_carousel-control {
   .uamx_header-dropdown:hover {
     .uamx_header-dropdownmenu {
       display: block;
+
+      li {
+        font-size: 0.9em;
+        line-height: 1em;
+        margin: 0.75em 0;
+      }
     }
 
     a.uamx_header-navbar-not-authenticated--dropdown-selector,
@@ -942,6 +948,14 @@ a.uamx_carousel-control {
               padding-top: 3em;
               padding-bottom: 3em;
 
+              a {
+                color: #fff;
+                font-weight: bold;
+
+                &:hover {
+                  color: #fff;
+                }
+              }
             }
   
             &.course-staff {
