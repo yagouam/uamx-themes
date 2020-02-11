@@ -5,7 +5,7 @@ var KEY_TO_STRING_MAP = {
   'organizacion': 'Oferta académica',
   'uamx': 'Innovación docente',
   'fcon': 'Formación continua',
-  'mooc': 'Mooc',
+  'mooc': 'MOOC',
   'otras': 'Otras',
   'materias': 'Materias',
   'facultades': 'Facultades',
@@ -177,16 +177,22 @@ $( document ).ready(function onDocumentReady () {
       filtersCount[key] = filtersCount[key] || {};
     }
 
+    var rgxFacultades = new RegExp(filters["facultades"], "i");
+    var rgxMaterias = new RegExp(filters["materias"], "i");
+    var rgxOrganizacion = new RegExp(filters["organizacion"], "i");
+    var rgxInvitation = new RegExp(filters["invitationonly"], "i");
+    var rgxQuery = new RegExp(filters["query"], "i");
+
     items.each(function () {
 
       // For each course, retrieve dataset and parse into separated variables. 
       // Variables are Boolean values, indicating whether course matches the filters selected and should be shown (true) or not (false).
 
-      var xfacultades = filters["facultades"] && $(this).data("facultades").match(filters["facultades"]);
-      var xmaterias = filters["materias"] && $(this).data("materias").match(filters["materias"]);
-      var xorganizacion = filters["organizacion"] && $(this).data("organizacion").match(filters["organizacion"]);
-      var xinvitationonly = filters["invitationonly"] && $(this).data("invitationonly").match(filters["invitationonly"]);
-      var xquery = filters["query"] && $(this).find('.course-name').text().match(new RegExp(filters["query"], "i"));
+      var xfacultades = filters["facultades"] && $(this).data("facultades").match(rgxFacultades);
+      var xmaterias = filters["materias"] && $(this).data("materias").match(rgxMaterias);
+      var xorganizacion = filters["organizacion"] && $(this).data("organizacion").match(rgxOrganizacion);
+      var xinvitationonly = filters["invitationonly"] && $(this).data("invitationonly").match(rgxInvitation);
+      var xquery = filters["query"] && $(this).find('.course-name').text().match(rgxQuery);
 
       // Get how many filters are currently active, in number
       var selectedFilters = [filters["facultades"], filters["materias"], filters["organizacion"], filters["invitationonly"], filters["query"]].filter(Boolean);
@@ -266,6 +272,10 @@ $( document ).ready(function onDocumentReady () {
 
   // call render func immediatly after page is loaded 
   render();
+
+  // hide loader and show filtered courses list
+  $('.uamx_search-loading').addClass('hidden');
+  $('.find-courses').removeClass('hidden');
 });
 
 // Utility to get params from URL, crossbrowser.
