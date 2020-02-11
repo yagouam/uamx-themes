@@ -115,10 +115,22 @@ highlighted_list = map(course_to_dict, highlighted_courses)
         <!--
         Highlighted courses list, only for mobiles
         -->
+        <%
+          """
+          When there are 1 or 2 courses to be shown, add this classes to make courses bigger.
+          """
+          carousel_className = ''
+
+          if len(highlighted_list) == 2:
+            mobile_className = 'index-highlighted-mobile-two'
+          elif len(highlighted_list) == 1:
+            mobile_className = 'index-highlighted-mobile-one'
+          endif
+        %>
         <div class="uamx_index-highlighted-mobile">
           <ul class="list-unstyled">
             %for dict in highlighted_list:
-              <li class="${dict['org_className']}">
+              <li class="${dict['org_className']} ${mobile_className}">
                 <%include file="./course.html" args="course=dict['course']" />
               </li>
             %endfor
@@ -198,6 +210,11 @@ highlighted_list = map(course_to_dict, highlighted_courses)
       <section class="uamx_index-category-wrapper">
         <h5 class="uamx_index-smalltitles">Oferta académica</h5>
         <div class="row uamx_index-categories-container">
+          <article class="col-sm card uamx_index-category uamx_index-category--fcon">
+            <a href="/courses?organizacion=fcon" class="card-body">
+              <h5 class="card-title">FORMACIÓN<br/>CONTINUA</h5>
+            </a>
+          </article>
           <article class="col-sm card uamx_index-category uamx_index-category--mooc">
             <a href="/courses?organizacion=mooc" class="card-body">
               <h5 class="card-title">MOOC</h5>
@@ -206,11 +223,6 @@ highlighted_list = map(course_to_dict, highlighted_courses)
           <article class="col-sm card uamx_index-category uamx_index-category--uamx">
             <a href="/courses?organizacion=uamx" class="card-body">
               <h5 class="card-title">INNOVACIÓN<br/>DOCENTE</h5>
-            </a>
-          </article>
-          <article class="col-sm card uamx_index-category uamx_index-category--fcon">
-            <a href="/courses?organizacion=fcon" class="card-body">
-              <h5 class="card-title">FORMACIÓN<br/>CONTINUA</h5>
             </a>
           </article>
         </div>
