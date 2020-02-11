@@ -23,7 +23,7 @@ KEY_TO_STRING_MAP = {
   'organizacion': 'Oferta académica',
   'uamx': 'Innovación docente',
   'fcon': 'Formación continua',
-  'mooc': 'Mooc',
+  'mooc': 'MOOC',
   'otras': 'Otras',
   'materias': 'Materias',
   'facultades': 'Facultades',
@@ -117,13 +117,13 @@ for course in fcon:
 %>
 
 <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu collapse" id="facetFilter">
-  <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
+  <h2 class="header-search-facets">Refina tu búsqueda</h2>
   <section class="search-facets-lists search-facets-uamx">
       % for facet in facets:
         <h3 class="header-facet">${keyToString(facet)}</h3>
         <ul class="facet-list">
         <%
-          sorted_keys = sorted(facets[facet], key = keyToString) 
+          sorted_keys = sorted(facets[facet], key = keyToString)
         %>
         % for key in sorted_keys:
           <li>
