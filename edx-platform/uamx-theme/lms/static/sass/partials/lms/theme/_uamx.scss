@@ -843,6 +843,12 @@ a.uamx_carousel-control {
         &:hover {
           background: darken(theme-color("info"), 10%) !important;
         }
+
+        &.uamx_about-view-course-button {
+          padding: 0.5em 1em;
+          border: 1px solid theme-color("info") !important;
+          margin-top: 1px;
+        }
       }
   
       .course-image {
