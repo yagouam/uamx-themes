@@ -35,14 +35,14 @@ list['materias'].sort()
 list['facultades'].sort()
 
 for materia in list['materias']:
-  ul_materias[-1].append(materia)
+  ul_materias[-1].append(materia.capitalize())
 
   # break list into sublists of 4 elements
   if len(ul_materias[-1]) % 4 == 0:
     ul_materias.append([])
  
 for facultad in list['facultades']:
-  ul_facultades[-1].append(facultad)
+  ul_facultades[-1].append(facultad.capitalize())
 
   # break list into sublists of 4 elements
   if len(ul_facultades[-1]) % 4 == 0:
@@ -82,12 +82,12 @@ for facultad in list['facultades']:
       <hr/>
       <div class="uamx_header-dropdownmenu-list">
         <div>
-          <h6><a href="/courses?organizacion=mooc">Moocs</a></h6>
-          <p class="small">Cursos online gratuitos de la UAM en la plataforma edX.</p>
-        </div>
-        <div>
           <h6><a href="/courses?organizacion=fcon">Formación continua</a></h6>
           <p class="small">Estudios propios, cursos de corta duración y formación in company online.</p>
+        </div>
+        <div>
+          <h6><a href="/courses?organizacion=mooc">MOOC</a></h6>
+          <p class="small">Cursos online gratuitos de la UAM en la plataforma edX.</p>
         </div>
         <div>
           <h6><a href="/courses?organizacion=uamx">Innovación docente</a></h6>
