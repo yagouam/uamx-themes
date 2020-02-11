@@ -24,6 +24,10 @@
     font-size: 14px;
     text-decoration: underline;
   }
+
+  .courses-container .courses .course .course-info .course-name .course-title {
+    font-size: 15px;
+  }
 }
 
 .uamx_index-highlighted-mobile {
@@ -36,6 +40,16 @@
     float: left;
     width: 30%;
     margin: 1.65%;
+
+    &.index-highlighted-mobile-two {
+      width: 49%;
+      margin: 0.5%;
+    }
+
+    &.index-highlighted-mobile-two {
+      width: 100%;
+      margin: 0%;
+    }
   }
 }
 
@@ -594,11 +608,10 @@ a.uamx_carousel-control {
   
         .course-title {
           color: #fff;
-          font-size: 14px;
-          line-height: 1.2rem;
+          font-size: 13px;
+          line-height: 1.45em;
           height: auto;
-          margin: 0;
-          font-weight: bold;
+          margin: 4px 0;
         }
     
         .course-organization,
@@ -608,8 +621,8 @@ a.uamx_carousel-control {
       }
   
       .course-date {
-        color: #FFF !important;
-        font-size: 13px;
+        color: rgba(255, 255, 255, 0.6) !important;
+        font-size: 12px;
         line-height: 1.2em;
       }
     }
@@ -619,6 +632,12 @@ a.uamx_carousel-control {
 /** SEARCH **/
 
 .uamx-search {
+
+  .uamx_search-loading {
+    margin: 2em 0;
+    text-align: center;
+  }
+
   .content-wrapper {
     position: relative;
     margin-top: 0;
@@ -675,10 +694,6 @@ a.uamx_carousel-control {
 .find-courses {
 
   background: none;
-
-  #filter-bar {
-    display: none;
-  }
 
   .courses-container {
     padding-top: 20px;
@@ -790,6 +805,10 @@ a.uamx_carousel-control {
       border-color: theme-color("secondary");
       background-image: url(/static/uamx-theme/images/recurso-gris.png);
     }
+  }
+
+  .filters .filters-inner {
+    border-width: 1px;
   }
 }
 
@@ -1065,4 +1084,12 @@ a.uamx_carousel-control {
 /********** GENERAL *************/
 a.btn {
   border-radius: 0 !important;
+}
+
+.alert {
+  border-radius: 0 !important;
+
+  &.alert-danger {
+    color: #721c24;
+  }
 }
