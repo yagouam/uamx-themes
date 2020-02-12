@@ -252,19 +252,26 @@ a.uamx_carousel-control {
       }
     }
 
-    .discovery-submit {
+    button.discovery-submit {
       background: none;
       color: #BBB;
       font-size: 16px;
       font-weight: normal;
       border: none;
       height: 32px;
-      pointer-events: none;
       position: absolute;
       top: 0;
       right: 0;
       box-shadow: none;
       text-shadow: none;
+      cursor: pointer;
+
+      &:active, &:hover, &:visited, &:focus {
+        color: #000000;
+        background: none !important;
+        border: none;
+        box-shadow: none;
+      }
     }
   }
 }
@@ -1099,4 +1106,10 @@ a.btn {
   &.alert-danger {
     color: #721c24;
   }
+}
+
+// Fore some reason there are places where bootstrap doesn't not work, so we need to add some extra classes "by hand"
+.hidden {
+  display: none;
+  visibility: hidden;
 }
