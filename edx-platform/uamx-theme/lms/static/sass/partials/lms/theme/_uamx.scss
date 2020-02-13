@@ -164,10 +164,10 @@ a.uamx_carousel-control {
       background-image: url(/static/uamx-theme/images/id.jpg);
 
       a {
-        background-color: rgba($uamx_green, 0.5);
+        background-color: rgba($uamx_gray, 0.5);
 
         &:hover {
-          background-color: rgba($uamx_green, 0.85);
+          background-color: rgba($uamx_gray, 0.85);
         }
       }
 
@@ -180,10 +180,10 @@ a.uamx_carousel-control {
       background-image: url(/static/uamx-theme/images/fc.jpg);
 
       a {
-        background-color: rgba($uamx_gray, 0.5);
+        background-color: rgba($uamx_green, 0.5);
 
         &:hover {
-          background-color: rgba($uamx_gray, 0.85);
+          background-color: rgba($uamx_green, 0.85);
         }
       }
 
@@ -558,7 +558,7 @@ a.uamx_carousel-control {
 .courses-container .courses {
 
   .organization-uam_uamx .course {
-    @include course-list-item_uamx($uamx_green);
+    @include course-list-item_uamx($uamx_gray);
   }
   
   .organization-mooc_uamx .course {
@@ -566,7 +566,7 @@ a.uamx_carousel-control {
   }
   
   .organization-fcon_uamx .course {
-    @include course-list-item_uamx($uamx_gray);
+    @include course-list-item_uamx($uamx_green);
   }
 
   li.course-listing-item_uamx {
@@ -798,7 +798,7 @@ a.uamx_carousel-control {
     font-size: 1.4em;
     font-weight: bold;
   
-    &.courses-list-title_uamx-uamx {
+    &.courses-list-title_uamx-fcon {
       border-color: theme-color("primary");
       background-image: url(/static/uamx-theme/images/recurso-verde.png);
     }
@@ -808,7 +808,7 @@ a.uamx_carousel-control {
       background-image: url(/static/uamx-theme/images/recurso.png);
     }
   
-    &.courses-list-title_uamx-fcon {
+    &.courses-list-title_uamx-uamx {
       border-color: theme-color("secondary");
       background-image: url(/static/uamx-theme/images/recurso-gris.png);
     }
@@ -1044,7 +1044,7 @@ a.uamx_carousel-control {
     }
 
     &.uamx_about-org-fcon .container .details .inner-wrapper section.about {
-      background: theme-color("secondary");
+      background: theme-color("primary");
     }
 
     &.uamx_about-org-mooc .container .details .inner-wrapper section.about {
@@ -1052,7 +1052,7 @@ a.uamx_carousel-control {
     }
 
     &.uamx_about-org-uam .container .details .inner-wrapper section.about {
-      background: theme-color("primary");
+      background: theme-color("secondary");
     }
   }
 
