@@ -24,6 +24,7 @@ KEY_TO_STRING_MAP = {
   'uamx': 'Innovación docente',
   'fcon': 'Formación continua',
   'mooc': 'MOOC',
+  'edx': 'MOOC',
   'otras': 'Otras',
   'materias': 'Materias',
   'facultades': 'Facultades',
@@ -91,6 +92,7 @@ def add_metadata (course, default_org):
 
   # organization may be overriden by the json metadata. The following use get_course_organization from courses_edx.utils to retrieve the correct organization
   key_org = get_course_organization(course, default_org)
+
   if key_org in facets['organizacion']:
     facets['organizacion'][key_org] += 1
   else:
@@ -109,7 +111,7 @@ for course in uamx:
   add_metadata(course, 'uamx')
 
 for course in moocs:
-  add_metadata(course, 'mooc')
+  add_metadata(course, 'edx')
 
 for course in fcon:
   add_metadata(course, 'fcon')

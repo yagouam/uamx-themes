@@ -67,7 +67,7 @@
                 data_invitationonly = 'cerrado' if hasattr(course, 'invitation_only') and course.invitation_only else 'abierto'
               %>
 
-              <li class="courses-listing-item course-listing-item_uamx organization-mooc_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="mooc" data-invitationonly="${data_invitationonly}">
+              <li class="courses-listing-item course-listing-item_uamx organization-mooc_uamx" data-materias="${data_materias}" data-facultades="${data_facultades}" data-organizacion="edx" data-invitationonly="${data_invitationonly}">
                 <%include file="../course.html" args="course=course" />
               </li>
             %endfor
