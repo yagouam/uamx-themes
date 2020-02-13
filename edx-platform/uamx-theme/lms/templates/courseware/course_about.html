@@ -136,6 +136,9 @@ if short_d:
 # Get organization key and fill className
 org_key = course.display_org_with_default if not 'organizacion' in json_metadata else json_metadata['organizacion']
 
+if isinstance(org_key, list):
+  org_key = org_key[0]
+
 if org_key not in CLASS_MAP:
   org_key = 'uamx'
 
@@ -201,9 +204,7 @@ uamx_className = CLASS_MAP[org_key]
           <div id="register_error"></div>
         %elif allow_anonymous:
           %if show_courseware_link:
-            <a href="${course_target}" class="btn btn-primary uamx_about-header-button">
-            <strong>${_("View Course")}</strong>
-            </a>
+            <a href="${course_target}" class="btn btn-primary uamx_about-header-button">${_("View Course")}</a>
           %endif
         %else:
           <% 
