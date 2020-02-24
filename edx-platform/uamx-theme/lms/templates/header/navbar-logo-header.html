@@ -15,7 +15,11 @@ from branding import api as branding_api
 
 <h1 class="header-logo">
   <div class="uamx-header_logos">
+    % if user.is_authenticated:
+    <a href="/home">
+    % else:
     <a href="/">
+    % endif
       <%block name="navigation_logo">
       <img  class="logo" src="${static.url("images/logo.png")}" alt="${_("{platform_name} Home Page").format(platform_name=static.get_platform_name())}"/>
       </%block>
