@@ -1,4 +1,4 @@
-/** index.html ***/
+/********** INDEX *************/
 
 .uamx-home {
   .content-wrapper {
@@ -276,12 +276,13 @@ a.uamx_carousel-control {
   }
 }
 
-/** footer.html **/
+/********** FOOTER *************/
 
 .uamx_footer.container-fluid {
 
   line-height: 2em;
   width: 87%;
+  max-width: 1720px;
   box-shadow: none;
 
   a.uamx_footer-uamlogo {
@@ -328,7 +329,8 @@ a.uamx_carousel-control {
   }
 }
 
-/** navbar-not-authenticated.html **/
+/********** NAVBAR NOT AUTHENTICATED *************/
+
 .global-header .nav-links.uamx_header-navbar-not-authenticated {
 
   .secondary {
@@ -480,7 +482,7 @@ a.uamx_carousel-control {
   }
 }
 
-/** index_uamx_header.html ***/
+/********** INDEX UAM HEADER *************/
 
 .uamx_index-nav {
   background-color: theme-color("secondary");
@@ -546,15 +548,27 @@ a.uamx_carousel-control {
   }
 }
 
-/** header/navbar-logo-header.html **/
+/********** GLOBAL HEADER  *************/
 
 .global-header {
 
   border-bottom-width: 4px;
   box-shadow: none;
+
+  .header-logo .course-header {
+    
+    max-width: 20%;
+
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      min-height: 1.3rem;
+    }
+  }
 }
 
-/** COURSES **/
+/********** COURSES *************/
 .courses-container .courses {
 
   .organization-uam_uamx .course {
@@ -580,7 +594,6 @@ a.uamx_carousel-control {
 
     .course-image {
 
-      // background-image: url(/static/uamx-theme/images/fc.jpg);
       background-size: cover;
       background-position: center;
 
@@ -636,7 +649,7 @@ a.uamx_carousel-control {
   }
 }
 
-/** SEARCH **/
+/********** SEARCH *************/
 
 .uamx-search {
 
@@ -819,7 +832,8 @@ a.uamx_carousel-control {
   }
 }
 
-/** ABOUT **/
+/********** ABOUT *************/
+
 .uamx-about {
 
   .content-wrapper.main-container {
@@ -1094,7 +1108,85 @@ a.uamx_carousel-control {
   }
 }
 
+/********** WIKI  *************/
+
+.view-wiki {
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+
+    .wiki-wrapper section.wiki .breadcrumb {
+      padding: 0.1em 1em;
+      margin-top: 0.25em;
+    }
+  }
+}
+
+/********** PROGRESS *************/
+
+.view-progress {
+  
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  nav.progress.wrapper-course-material {
+    display: block;
+    height: auto;
+    background: transparent;
+    border-radius: 0;
+  }
+}
+
+.wrapper-msg.wrapper-auto-cert .auto-cert-message .has-actions .msg-actions .btn {
+  font-weight: normal;
+  background-color: theme-color("primary");
+
+  &:hover {
+    background-color: darken(theme-color("primary"), 10%);
+  }
+}
+
+/********** INSTRUCTOR *************/
+
+.view-instructordash {
+
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .instructor-dashboard-content-2 .instructor-nav .nav-item .btn-link {
+    color: #313131;
+
+    &:hover {
+      text-decoration: none;
+      color: theme-color("primary");
+    }
+  }
+}
+
+/********** COURSE TABS ***********/
+.content-wrapper .course-tabs {
+  overflow-x: auto;
+}
+
+/********** DASHBOARD *************/
+
+.wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn {
+  border: none;
+  background-image: none;
+}
+
 /********** GENERAL *************/
+
+.content-wrapper {
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 a.btn {
   border-radius: 0 !important;
 }

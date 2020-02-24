@@ -72,6 +72,10 @@
     font-size: 0.8em;
     line-height: 2em;
   }
+
+  .xmodule_display.xmodule_SequenceModule .sequence-nav .sequence-list-wrapper {
+    overflow-x: inherit;
+  }
 }
 
 
