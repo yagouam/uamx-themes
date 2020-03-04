@@ -1,0 +1,30 @@
+@import '/edx/app/edxapp/edx-platform/lms/static/certificates/sass/main-ltr';
+
+// UAM official colors
+$uamx_blue: #0077c8;
+$uamx_green: #4a7729;
+$uamx_gray: #75787b;
+$uamx_black: #000000;
+
+.uamx_certificate {
+
+  .accomplishment-rendering {
+
+    border: solid 10px $uamx_gray;
+    outline: solid 20px $uamx_green;
+ 
+    .accomplishment-type {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .accomplishment-statement {
+      border-bottom: none;
+    }
+
+    .accomplishment-signatories {
+      border-bottom: none;
+    }
+  }
+}
+
