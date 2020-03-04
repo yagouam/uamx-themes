@@ -25,6 +25,47 @@ $uamx_black: #000000;
     .accomplishment-signatories {
       border-bottom: none;
     }
+
+    .accomplishment-type-symbol {
+      width: 15rem;
+      margin: 0 auto 5rem auto;
+    }
+  }
+
+  @media print {
+    
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    bottom: 60px;
+    right: 20px;
+
+    .wrapper-accomplishment-rendering {
+      height: 100%;
+
+      .accomplishment-rendering {
+        height: 100%;
+
+        .wrapper-statement-and-signatories {
+          border-bottom: none !important;
+        }
+      }
+    }
+  }
+}
+
+@page {
+  size: portrait;
+}
+
+.layout-accomplishment .accomplishment-signatories .signatory {
+
+  &.uamx_signatorylength-2 {
+    width: 46%;
+  }
+
+  &.uamx_signatorylength-3 {
+    width: 30%;
   }
 }
 

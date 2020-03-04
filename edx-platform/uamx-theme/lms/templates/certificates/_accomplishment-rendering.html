@@ -19,17 +19,16 @@ course_mode_class = course_mode if course_mode else ''
             <div class="wrapper-statement-and-signatories">
                 <div class="accomplishment-statement">
                     <p class="accomplishment-statement-lead">
-                        <strong class="accomplishment-recipient hd-1 emphasized">${accomplishment_copy_name}</strong>
-                        <span class="accomplishment-summary copy copy-lead">${accomplishment_copy_description_full}</span>
+                        <span class="accomplishment-summary copy copy-lead">El Director del Curso otorga a</span>
+                        <strong class="accomplishment-recipient hd-1 emphasized">Doña/D ${accomplishment_copy_name}</strong>
+                        <span class="accomplishment-summary copy copy-lead">El presente</span>
+                        <strong class="accomplishment-recipient hd-1 emphasized">CERTIFICADO</strong>
+                        <span class="accomplishment-summary copy copy-lead">Por su asistencia al curso:</span>
 
-                        <span class="accomplishment-course hd-1 emphasized">
-                            <span class="accomplishment-course-org">${accomplishment_copy_course_org}  </span>
-                            <span class="accomplishment-course-number">${course_number}</span>:
-                            <span class="accomplishment-course-name">${accomplishment_copy_course_name}</span>
-                        </span>
+                        <strong class="accomplishment-recipient hd-1 emphasized">${accomplishment_copy_course_name}</strong>
+                        <!-- para mostrar las horas cursadas necesitamos habilitar el servicio de discovery, que actualmente falla: https://edx.readthedocs.io/projects/edx-installing-configuring-and-running/en/latest/configuration/enable_certificates.html#display-hours-of-effort-on-course-certificates  -->
+                        <span class="accomplishment-summary copy copy-lead">organizado por ${organization_short_name}, emitido el ${certificate_date_issued}</span>
                     </p>
-
-                    <p class="accomplishment-statement-detail copy copy-lead">${accomplishment_copy_course_description}</p>
                 </div>
 
                 % if mode != 'base':
@@ -39,8 +38,8 @@ course_mode_class = course_mode if course_mode else ''
                     <div class="wrapper-signatories">
                         <div class="list-signatories">
                             % if certificate_data:
-                                % for signatory in certificate_data.get('signatories', []):
-                                <div class="signatory">
+                                % for signatory in filter(lambda x: len(x['name']) > 0, certificate_data.get('signatories', [])):
+                                <div class="signatory uamx_signatorylength-${len(certificate_data['signatories'])}">
                                     <img class="signatory-signature" src="${static.url(signatory['signature_image_path'])}" alt="${signatory['name']}">
 
                                     <h4 class="signatory-name hd-5">${signatory['name']}</h4>
