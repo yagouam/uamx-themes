@@ -16,6 +16,11 @@
   }
   
   .global-header {
+
+    .hamburger-menu {
+      top: 12px;
+    }
+
     .nav-links.uamx_header-navbar-not-authenticated {
       .main {
         .nav-item {
@@ -75,6 +80,10 @@
 
   .xmodule_display.xmodule_SequenceModule .sequence-nav .sequence-list-wrapper {
     overflow-x: inherit;
+  }
+
+  .hidden-desktop {
+    display: inline-block;
   }
 }
 

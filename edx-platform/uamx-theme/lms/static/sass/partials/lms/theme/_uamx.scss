@@ -46,7 +46,7 @@
       margin: 0.5%;
     }
 
-    &.index-highlighted-mobile-two {
+    &.index-highlighted-mobile-one {
       width: 100%;
       margin: 0%;
     }
@@ -844,8 +844,6 @@ a.uamx_carousel-control {
   .course-info {
 
     header.course-profile {
-      background: none;
-      background-image: none;
       height: auto;
       box-shadow: none;
       border-bottom: none;
@@ -860,6 +858,8 @@ a.uamx_carousel-control {
         box-shadow: none !important;
         border: 0 !important;
         text-shadow: none !important;
+        width: fit-content !important;
+        padding: 0.5em 1em !important;
   
         &:hover {
           background: darken(theme-color("info"), 10%) !important;
@@ -945,8 +945,9 @@ a.uamx_carousel-control {
             }
     
             .important-dates-item-text {
-              margin-left: 35px;
-              line-height: 12px;
+              margin: 2px 0 0 36px;
+              line-height: 18px;
+              display: inline-block;
             }
     
             .icon {
@@ -1204,4 +1205,8 @@ a.btn {
 .hidden {
   display: none;
   visibility: hidden;
+}
+
+.hidden-desktop {
+  display: none;
 }

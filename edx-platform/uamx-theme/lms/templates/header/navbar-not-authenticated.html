@@ -54,7 +54,10 @@ for facultad in list['facultades']:
 <nav class="nav-links uamx_header-navbar-not-authenticated" aria-label=${_("Supplemental Links")}>
   <div class="main">
     <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
-      <a href="/courses" class="uamx_header-navbar-not-authenticated--dropdown-selector">Materias</a>
+      <a href="/courses" class="uamx_header-navbar-not-authenticated--dropdown-selector">
+        <span class="hidden-desktop">Encontrar curso</span>
+        <span class="hidden-mobile">Materias</span>
+      </a>
     <div class="uamx_header-dropdownmenu hidden-mobile uamx_header-dropdownmenu">
       <h5>Materias</h5>
       <hr/>
@@ -75,7 +78,7 @@ for facultad in list['facultades']:
         </div>
       </div>
     </div>
-    <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
+    <div class="hidden-mobile nav-item uamx_header-dropdown">
       <a href="/courses" class="uamx_header-navbar-not-authenticated--dropdown-selector">Oferta académica</a>
     <div class="uamx_header-dropdownmenu uamx_header-dropdown-oferta hidden-mobile">
       <h5>Oferta académica</h5>
@@ -96,7 +99,7 @@ for facultad in list['facultades']:
       </div>
     </div>
     </div>
-    <div class="mobile-nav-item hidden-mobile nav-item uamx_header-dropdown">
+    <div class="hidden-mobile nav-item uamx_header-dropdown">
       <a href="/courses" class="uamx_header-navbar-not-authenticated--dropdown-selector">Facultades</a>
     <div class="uamx_header-dropdownmenu hidden-mobile">
       <h5>Facultades</h5>
