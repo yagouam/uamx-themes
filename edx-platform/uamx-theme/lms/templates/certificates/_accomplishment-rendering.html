@@ -27,7 +27,11 @@ course_mode_class = course_mode if course_mode else ''
 
                         <strong class="accomplishment-recipient hd-1 emphasized">${accomplishment_copy_course_name}</strong>
                         <!-- para mostrar las horas cursadas necesitamos habilitar el servicio de discovery, que actualmente falla: https://edx.readthedocs.io/projects/edx-installing-configuring-and-running/en/latest/configuration/enable_certificates.html#display-hours-of-effort-on-course-certificates  -->
-                        <span class="accomplishment-summary copy copy-lead">organizado por ${organization_short_name}, emitido el ${certificate_date_issued}</span>
+                        <span class="accomplishment-summary copy copy-lead">organizado por ${organization_short_name}, emitido el ${certificate_date_issued}
+                        % if hours_of_effort is not UNDEFINED:
+                          con una duración de ${hours_of_effort} horas
+                        % endif
+                        </span>
                     </p>
                 </div>
 
